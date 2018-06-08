@@ -43,9 +43,17 @@ call plug#begin('~/.config/nvim/plugged')
 
   " Autocomplete
   " https://github.com/Valloric/YouCompleteMe/#mac-os-x
-  Plug 'Valloric/YouCompleteMe', {
-  \   'do': './install.py --js-completer'
-  \ }
+  " Plug 'Valloric/YouCompleteMe', {
+  " \   'do': './install.py --js-completer'
+  " \ }
+  "
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
   " Syntax
   Plug 'pangloss/vim-javascript'
@@ -87,11 +95,52 @@ call plug#end()
 
 " ===============
 " YouCompleteMe
-set completeopt-=preview
-let g:ycm_complete_in_comments = 1
-" let g:ycm_filepath_completion_use_working_dir = 1
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-" let g:ycm_collect_identifiers_from_tags_files = 1
+" set completeopt-=preview
+" let g:ycm_complete_in_comments = 1
+" " let g:ycm_filepath_completion_use_working_dir = 1
+" let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" " let g:ycm_collect_identifiers_from_tags_files = 1
+
+" ==============================
+" LSP
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['flow-language-server', '--stdio'],
+    \ 'javascript.jsx': ['flow-language-server', '--stdio'],
+    \ }
+
+" let g:LanguageClient_diagnosticsEnable = 0
+
+let g:LanguageClient_hoverPreview = 'Always'
+function ToggleLanguageClientHover()
+  let l:hoverCursor = col('.') . '|' . line('.')
+  if exists('b:LanguageClient_hoverCursor') && b:LanguageClient_hoverCursor == l:hoverCursor
+    pclose
+    let b:LanguageClient_hoverCursor = ''
+  else
+    call LanguageClient#textDocument_hover()
+    let b:LanguageClient_hoverCursor = l:hoverCursor
+  endif
+endfunction
+autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+autocmd FileType javascript,javascript.jsx nnoremap <silent> K :call ToggleLanguageClientHover()<CR>
+
+" ====================
+" Deoplete options
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#auto_completion_start_length = 0
+let g:deoplete#file#enable_buffer_path = 1
+
+call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
+call deoplete#custom#source('buffer', 'min_pattern_length', 1)
+
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+
+let g:deoplete#sources = {}
+let g:deoplete#sources._ = ['buffer', 'file']
+let g:deoplete#sources['javascript'] = ['buffer', 'file', 'LanguageClient']
+let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'LanguageClient']
 
 
 " ===============
@@ -219,6 +268,10 @@ let g:ale_lint_on_text_changed = "never" " only lint on file save
 
 " Run ale fixer on `l
 nmap `l <Plug>(ale_fix)
+
+let g:ale_open_list = 0
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 0
 
 " let g:airline#extensions#ale#enabled = 1
 
