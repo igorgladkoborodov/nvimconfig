@@ -63,7 +63,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'vim-ruby/vim-ruby'
   Plug 'tpope/vim-rails'
   Plug 'leafgarland/typescript-vim'
-  Plug 'flowtype/vim-flow'
+  " Plug 'flowtype/vim-flow'
 
   " Color Scheme
   Plug 'iCyMind/NeoSolarized'
@@ -108,7 +108,7 @@ let g:LanguageClient_serverCommands = {
     \ 'javascript.jsx': ['flow-language-server', '--stdio'],
     \ }
 
-" let g:LanguageClient_diagnosticsEnable = 0
+let g:LanguageClient_diagnosticsEnable = 0
 
 let g:LanguageClient_hoverPreview = 'Always'
 function ToggleLanguageClientHover()
