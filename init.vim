@@ -123,9 +123,9 @@ let g:lightline = {
 \   'time': 'LightlineTime'
 \ },
 \ 'component_type': {
-\   'readonly': 'error',
-\   'linter_warnings': 'error',
-\   'linter_errors': 'error'
+\   'readonly': 'warning',
+\   'linter_warnings': 'custom',
+\   'linter_errors': 'custom'
 \ },
 \ 'mode_map': {
 \   'n' : '',
@@ -151,7 +151,7 @@ function! LightlineLinterWarnings() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:all_non_errors == 0 ? '' : printf('W%d:L%d', all_non_errors, problems[0].lnum)
+  return l:all_non_errors == 0 ? '' : printf('⚠️ %d:L%d', all_non_errors, problems[0].lnum)
 endfunction
 
 function! LightlineLinterErrors() abort
@@ -159,7 +159,7 @@ function! LightlineLinterErrors() abort
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:all_errors = l:counts.error + l:counts.style_error
   let l:all_non_errors = l:counts.total - l:all_errors
-  return l:all_errors == 0 ? '' : printf('E%d:L%d', all_errors, problems[0].lnum)
+  return l:all_errors == 0 ? '' : printf('🚫%d:L%d', all_errors, problems[0].lnum)
 endfunction
 
 " Update and show lightline but only if it's visible (e.g., not in Goyo)
@@ -185,15 +185,15 @@ let g:NERDTreeHighlightCursorline=0
 " autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " How can I open NERDTree automatically when vim starts up on opening a directory?
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-
-" How can I open a NERDTree automatically when vim starts up if no files were specified?
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"
+" " How can I open a NERDTree automatically when vim starts up if no files were specified?
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Remove right scrollbar
-set guioptions-=L
+" set guioptions-=L
 
 " ===============
 " ZoomWin
@@ -212,8 +212,8 @@ let g:ale_fixers = {
 \ 'javascript': ['prettier', 'eslint'],
 \}
 
-let g:ale_sign_error = "XX"
-let g:ale_sign_warning = "!!"
+let g:ale_sign_error = "🚫"
+let g:ale_sign_warning = "⚠️ "
 
 let g:ale_lint_on_text_changed = "never" " only lint on file save
 
@@ -457,4 +457,3 @@ set fillchars+=vert:\
 if filereadable(expand("~/.config/nvim/local/local.vim"))
   source ~/.config/nvim/local/local.vim
 endif
-
