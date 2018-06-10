@@ -506,6 +506,8 @@ nnoremap # #``
 " hide | on window split (space after \ is important)
 set fillchars+=vert:\ 
 
+source ~/.config/nvim/vv.vim
+
 " Load specifics to this host
 if filereadable(expand("~/.config/nvim/local/local.vim"))
   source ~/.config/nvim/local/local.vim
