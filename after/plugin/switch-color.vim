@@ -29,6 +29,7 @@ function ToggleColors()
     hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#ff2600 guibg=#073642  gui=NONE
     hi ALEWarningSign ctermfg=10  ctermbg=0  guifg=#FFCC01  guibg=#073642  gui=NONE
     hi CursorLine ctermfg=NONE ctermbg=236 guifg=NONE guibg=#002E38 guisp=#93a1a1 cterm=NONE gui=NONE
+    hi illuminatedWord ctermfg=NONE ctermbg=236 guifg=NONE guibg=#003e4d guisp=#93a1a1 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=160 guifg=#fdf6e3 guibg=#dc322f guisp=NONE cterm=NONE gui=NONE
     hi Normal ctermfg=247 ctermbg=235 guifg=#93a1a1 guibg=#00232B guisp=NONE cterm=NONE gui=NONE
     hi VertSplit guibg=#073642
@@ -40,6 +41,7 @@ function ToggleColors()
     hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#c34915  guibg=#eee8d5  gui=NONE
     hi ALEWarningSign ctermfg=10  ctermbg=0  guifg=#b58901  guibg=#eee8d5  gui=NONE
     hi CursorLine ctermfg=NONE ctermbg=254 guifg=NONE guibg=#F7F1DF guisp=#586e75 cterm=NONE gui=NONE
+    hi illuminatedWord ctermfg=NONE ctermbg=254 guifg=NONE guibg=#f5edd6 guisp=#586e75 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=32 guifg=#fdf6e3 guibg=#268bd2 guisp=NONE cterm=NONE gui=NONE
     hi VertSplit guibg=#eee8d5
     hi SignColumn guibg=#eee8d5

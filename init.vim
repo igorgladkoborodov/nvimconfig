@@ -42,13 +42,18 @@ call plug#begin('~/.config/nvim/plugged')
   " Plug 'airblade/vim-gitgutter'
 
   " Autocomplete
-  " https://github.com/Valloric/YouCompleteMe/#mac-os-x
+  " " https://github.com/Valloric/YouCompleteMe/#mac-os-x
   " Plug 'Valloric/YouCompleteMe', {
   " \   'do': './install.py --js-completer'
   " \ }
   "
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
+  " Another autocomplete
+  Plug 'roxma/nvim-yarp'
+  Plug 'ncm2/ncm2'
+  Plug 'ncm2/ncm2-bufword'
+  Plug 'ncm2/ncm2-path'
 
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -89,17 +94,34 @@ call plug#begin('~/.config/nvim/plugged')
   " Toggle loclist and quickfix by \l and \q
   Plug 'Valloric/ListToggle'
 
+  " Open code in github on gho
+  Plug 'prakashdanish/vim-githubinator'
+
+  " Highlight current word
+  Plug 'RRethy/vim-illuminate'
+
 call plug#end()
 
 " ====================== PLUGINS SETTINGS =================
 
 " ===============
-" YouCompleteMe
+" " YouCompleteMe
 " set completeopt-=preview
 " let g:ycm_complete_in_comments = 1
 " " let g:ycm_filepath_completion_use_working_dir = 1
 " let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " " let g:ycm_collect_identifiers_from_tags_files = 1
+"
+
+" NCM2
+autocmd BufEnter  *  call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+" Start search from the first character
+let g:ncm2#complete_length=[[1,1]]
+" Start new line on enter when autocomplete is opened
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" Shift+Tab support on opened autocomplete
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " ==============================
 " LSP
@@ -126,13 +148,13 @@ autocmd FileType javascript,javascript.jsx nnoremap <silent> K :call ToggleLangu
 
 " ====================
 " Deoplete options
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#auto_completion_start_length = 0
-let g:deoplete#file#enable_buffer_path = 1
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_smart_case = 1
+" let g:deoplete#auto_completion_start_length = 0
+" let g:deoplete#file#enable_buffer_path = 1
 
-call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
-call deoplete#custom#source('buffer', 'min_pattern_length', 1)
+" call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
+" call deoplete#custom#source('buffer', 'min_pattern_length', 1)
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
