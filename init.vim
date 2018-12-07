@@ -49,11 +49,36 @@ call plug#begin('~/.config/nvim/plugged')
   "
   " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-  " Another autocomplete
+  "================================================
+  " NCM2
   Plug 'roxma/nvim-yarp'
   Plug 'ncm2/ncm2'
   Plug 'ncm2/ncm2-bufword'
   Plug 'ncm2/ncm2-path'
+
+  autocmd BufEnter * call ncm2#enable_for_buffer()
+
+  set completeopt=noinsert,menuone,noselect
+
+  " Start search from the first character
+  let g:ncm2#complete_length=[[1,1]]
+  let g:ncm2#popup_delay=50
+  let g:ncm2#popup_limit=10
+
+   " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+  inoremap <c-c> <ESC>
+
+  " When the <Enter> key is pressed while the popup menu is visible, it only
+  " hides the menu. Use this mapping to close the menu and also start a new
+  " line.
+  inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+  " Use <TAB> to select the popup menu:
+  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
+  "================================================
 
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -100,6 +125,9 @@ call plug#begin('~/.config/nvim/plugged')
   " Highlight current word
   Plug 'RRethy/vim-illuminate'
 
+  " UML preview
+  Plug 'scrooloose/vim-slumlord'
+
 call plug#end()
 
 " ====================== PLUGINS SETTINGS =================
@@ -113,21 +141,11 @@ call plug#end()
 " " let g:ycm_collect_identifiers_from_tags_files = 1
 "
 
-" NCM2
-autocmd BufEnter  *  call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-" Start search from the first character
-let g:ncm2#complete_length=[[1,1]]
-" Start new line on enter when autocomplete is opened
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" Shift+Tab support on opened autocomplete
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " ==============================
 " LSP
 let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['flow-language-server', '--stdio'],
-    \ 'javascript.jsx': ['flow-language-server', '--stdio'],
+    \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
+    \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
     \ }
 
 let g:LanguageClient_diagnosticsEnable = 0
@@ -152,18 +170,23 @@ autocmd FileType javascript,javascript.jsx nnoremap <silent> K :call ToggleLangu
 " let g:deoplete#enable_smart_case = 1
 " let g:deoplete#auto_completion_start_length = 0
 " let g:deoplete#file#enable_buffer_path = 1
-
+" let g:deoplete#async_timeout = 10
+" let g:deoplete#auto_complete_delay = 10
+"
 " call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
 " call deoplete#custom#source('buffer', 'min_pattern_length', 1)
+" call deoplete#custom#source('file', 'min_pattern_length', 0)
+"
+" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"
+" let g:deoplete#sources = {}
+" let g:deoplete#sources._ = ['buffer', 'file']
+" let g:deoplete#sources['javascript'] = ['buffer', 'file', 'LanguageClient']
+" let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'LanguageClient']
 
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = ['buffer', 'file']
-let g:deoplete#sources['javascript'] = ['buffer', 'file', 'LanguageClient']
-let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'LanguageClient']
-
+" Don't show preview window on top when select autocomplete item
+set completeopt-=preview
 
 " ===============
 " Lightline
@@ -513,10 +536,10 @@ map `p "0p
 " endfunction
 
 " Open vim in max width
-if has("gui_running")
-  set lines=999 columns=9999
-  " set fu
-end
+" if has("gui_running")
+"   set lines=999 columns=9999
+"   " set fu
+" end
 
 " Match tags by %
 source $VIMRUNTIME/macros/matchit.vim
@@ -528,7 +551,16 @@ nnoremap # #``
 " hide | on window split (space after \ is important)
 set fillchars+=vert:\ 
 
-source ~/.config/nvim/vv.vim
+
+" Folding
+nnoremap <Space> za
+set nofoldenable
+set foldmethod=indent
+set foldlevel=99999
+
+if filereadable(expand("~/.config/nvim/vv.vim"))
+  source ~/.config/nvim/vv.vim
+endif
 
 " Load specifics to this host
 if filereadable(expand("~/.config/nvim/local/local.vim"))
