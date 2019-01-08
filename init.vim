@@ -1,6 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+let g:python2_host_prog = '/usr/local/bin/python'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -353,7 +356,7 @@ let g:CommandTAcceptSelectionCommand = 'e'
 " LustyJuggler
 map <Leader>s :LustyJuggler<CR>
 map <Leader>b :LustyBufferExplorer<CR>
-map <Leader>e :LustyFilesystemExplorerFromHere<CR>
+map <Leader>d :LustyFilesystemExplorerFromHere<CR>
 
 
 " ===============

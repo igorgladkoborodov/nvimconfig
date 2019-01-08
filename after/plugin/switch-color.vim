@@ -89,8 +89,13 @@ let g:neosolarized_bold = 0
 let g:neosolarized_underline = 0
 let g:neosolarized_italic = 0
 
-call ToggleColorsTo(1)
 call ToggleSpellTo(1)
+
+if exists('g:vv')
+  call ToggleColorsTo(1)
+else
+  call ToggleColorsTo(0)
+end
 
 " map <F5> :call ToggleFont()<CR>
 map <F6> :call ToggleColors()<CR>
