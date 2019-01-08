@@ -54,39 +54,55 @@ call plug#begin('~/.config/nvim/plugged')
 
   "================================================
   " NCM2
-  Plug 'roxma/nvim-yarp'
-  Plug 'ncm2/ncm2'
-  Plug 'ncm2/ncm2-bufword'
-  Plug 'ncm2/ncm2-path'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'ncm2/ncm2'
+  " Plug 'ncm2/ncm2-bufword'
+  " Plug 'ncm2/ncm2-path'
+  "
+  " autocmd BufEnter * call ncm2#enable_for_buffer()
+  "
+  " set completeopt=noinsert,menuone,noselect
+  "
+  " " Start search from the first character
+  " let g:ncm2#complete_length=[[1,1]]
+  " let g:ncm2#popup_delay=50
+  " let g:ncm2#popup_limit=10
+  "
+  "  " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+  " inoremap <c-c> <ESC>
+  "
+  " " When the <Enter> key is pressed while the popup menu is visible, it only
+  " " hides the menu. Use this mapping to close the menu and also start a new
+  " " line.
+  " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+  "
+  " " Use <TAB> to select the popup menu:
+  " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+  " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-  autocmd BufEnter * call ncm2#enable_for_buffer()
+  " ======================================================
+  " coc.vim - completion plugin
+  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
-  set completeopt=noinsert,menuone,noselect
+  " Use tab for trigger completion with characters ahead and navigate.
+	" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+	inoremap <silent><expr> <TAB>
+				\ pumvisible() ? "\<C-n>" :
+				\ <SID>check_back_space() ? "\<TAB>" :
+				\ coc#refresh()
+	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-  " Start search from the first character
-  let g:ncm2#complete_length=[[1,1]]
-  let g:ncm2#popup_delay=50
-  let g:ncm2#popup_limit=10
-
-   " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-  inoremap <c-c> <ESC>
-
-  " When the <Enter> key is pressed while the popup menu is visible, it only
-  " hides the menu. Use this mapping to close the menu and also start a new
-  " line.
-  inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-
-  " Use <TAB> to select the popup menu:
-  inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
+	function! s:check_back_space() abort
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~# '\s'
+	endfunction<Paste>
 
   "================================================
 
-  Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+  " Plug 'autozimu/LanguageClient-neovim', {
+  "   \ 'branch': 'next',
+  "   \ 'do': 'bash install.sh',
+  "   \ }
 
   " Syntax
   Plug 'pangloss/vim-javascript'
@@ -146,26 +162,26 @@ call plug#end()
 
 " ==============================
 " LSP
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
-    \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
-    \ }
-
-let g:LanguageClient_diagnosticsEnable = 0
-
-let g:LanguageClient_hoverPreview = 'Always'
-function ToggleLanguageClientHover()
-  let l:hoverCursor = col('.') . '|' . line('.')
-  if exists('b:LanguageClient_hoverCursor') && b:LanguageClient_hoverCursor == l:hoverCursor
-    pclose
-    let b:LanguageClient_hoverCursor = ''
-  else
-    call LanguageClient#textDocument_hover()
-    let b:LanguageClient_hoverCursor = l:hoverCursor
-  endif
-endfunction
-autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-autocmd FileType javascript,javascript.jsx nnoremap <silent> K :call ToggleLanguageClientHover()<CR>
+" let g:LanguageClient_serverCommands = {
+"     \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
+"     \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
+"     \ }
+"
+" let g:LanguageClient_diagnosticsEnable = 0
+"
+" let g:LanguageClient_hoverPreview = 'Always'
+" function ToggleLanguageClientHover()
+"   let l:hoverCursor = col('.') . '|' . line('.')
+"   if exists('b:LanguageClient_hoverCursor') && b:LanguageClient_hoverCursor == l:hoverCursor
+"     pclose
+"     let b:LanguageClient_hoverCursor = ''
+"   else
+"     call LanguageClient#textDocument_hover()
+"     let b:LanguageClient_hoverCursor = l:hoverCursor
+"   endif
+" endfunction
+" autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" autocmd FileType javascript,javascript.jsx nnoremap <silent> K :call ToggleLanguageClientHover()<CR>
 
 " ====================
 " Deoplete options
@@ -299,6 +315,8 @@ let g:NERDTreeHighlightCursorline=0
 " ===============
 " ALE
 
+let g:ale_sign_offset = 1000
+
 let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],
 \ 'ruby': ['rubocop', 'mri'],
@@ -306,13 +324,13 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
 \ 'ruby': ['rubocop'],
-\ 'javascript': ['prettier', 'eslint'],
+\ 'javascript': ['eslint'],
 \}
 
 let g:ale_sign_error = "🚫"
 let g:ale_sign_warning = "⚠️ "
 
-let g:ale_lint_on_text_changed = "never" " only lint on file save
+" let g:ale_lint_on_text_changed = "never" " only lint on file save
 
 " Run ale fixer on `l
 nmap `l <Plug>(ale_fix)

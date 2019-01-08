@@ -1,0 +1,13 @@
+{
+  "coc.preferences.diagnostic.enable": false,
+  "tsserver.enableJavascript": true,
+  "languageserver": {
+    "flow": {
+      "command": "flow-language-server",
+      "args": ["--stdio"],
+      "filetypes": ["javascript", "javascriptreact", "js", "javascript.jsx"],
+      "rootPatterns": [".flowconfig"],
+      "trace.server": "verbose"
+    }
+  }
+}
