@@ -4,10 +4,10 @@
   "languageserver": {
     "flow": {
       "command": "flow-language-server",
-      "args": ["--stdio"],
+      "args": ["--stdio", "--try-flow-bin"],
       "filetypes": ["javascript", "javascriptreact", "js", "javascript.jsx"],
       "rootPatterns": [".flowconfig"],
-      "trace.server": "verbose"
+      // "trace.server": "verbose"
     }
   }
 }

@@ -4,211 +4,331 @@ filetype off                  " required
 let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 
-" Specify a directory for plugins
-" - For Neovim: ~/.local/share/nvim/plugged
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.config/nvim/plugged')
+language en_US                " sets the language of the messages / ui (vim)
+" set ruler                   " Info in the bottom right
+syntax enable
 
-  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-  Plug 'junegunn/fzf.vim'
+set laststatus=2
 
-  " Show tree on Leader a
-  Plug 'scrooloose/nerdtree'
+set encoding=utf-8
+set showcmd                     " display incomplete commands
+filetype plugin indent on       " load file type plugins + indentation
 
-  " gc for comment
-  Plug 'tomtom/tcomment_vim'
+set wildmenu                    " visual autocomplete for command menu
+set lazyredraw                  " redraw only when we need to.
 
-  " Leader ig to show indent
-  Plug 'nathanaelkane/vim-indent-guides'
+" Whitespace
+"set nowrap                     " don't wrap lines
+set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
+set expandtab                   " use spaces, not tabs (optional)
+set backspace=indent,eol,start  " backspace through everything in insert mode
 
-  " Double leader to zoom
-  " Plug 'drn/zoomwin-vim'
+" Searching
+set hlsearch                    " highlight matches
+set incsearch                   " incremental searching
+set ignorecase                  " searches are case insensitive...
+set smartcase                   " ... unless they contain at least one capital letter
 
-  " Leader f for search
-  Plug 'mileszs/ack.vim'
+set wrap                        " Wrap by default
 
-  " Find files on leader t
-  " Plug 'wincent/command-t', {
-  " \   'do': 'cd ruby/command-t/ext/command-t && ruby extconf.rb && make'
-  " \ }
+" Ignore these from search etc
+set wildignore+=*/tmp,*/node_modules,.DS_Store,*/.bundle
 
-  " Buffer navigation
-  Plug 'sjbach/lusty'
-
-  " Fix copypaste
-  Plug 'ConradIrwin/vim-bracketed-paste'
-
-  " File utils (:Rename, :Move, :Delete etc)
-  Plug 'tpope/vim-eunuch'
-
-  " Git diff after save
-  " Plug 'airblade/vim-gitgutter'
-
-  " Autocomplete
-  " " https://github.com/Valloric/YouCompleteMe/#mac-os-x
-  " Plug 'Valloric/YouCompleteMe', {
-  " \   'do': './install.py --js-completer'
-  " \ }
-  "
-  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-
-  "================================================
-  " NCM2
-  " Plug 'roxma/nvim-yarp'
-  " Plug 'ncm2/ncm2'
-  " Plug 'ncm2/ncm2-bufword'
-  " Plug 'ncm2/ncm2-path'
-  "
-  " autocmd BufEnter * call ncm2#enable_for_buffer()
-  "
-  " set completeopt=noinsert,menuone,noselect
-  "
-  " " Start search from the first character
-  " let g:ncm2#complete_length=[[1,1]]
-  " let g:ncm2#popup_delay=50
-  " let g:ncm2#popup_limit=10
-  "
-  "  " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
-  " inoremap <c-c> <ESC>
-  "
-  " " When the <Enter> key is pressed while the popup menu is visible, it only
-  " " hides the menu. Use this mapping to close the menu and also start a new
-  " " line.
-  " inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-  "
-  " " Use <TAB> to select the popup menu:
-  " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-  " inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-  " ======================================================
-  " coc.vim - completion plugin
-  Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
-  " Use tab for trigger completion with characters ahead and navigate.
-	" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-	inoremap <silent><expr> <TAB>
-				\ pumvisible() ? "\<C-n>" :
-				\ <SID>check_back_space() ? "\<TAB>" :
-				\ coc#refresh()
-	inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-	function! s:check_back_space() abort
-		let col = col('.') - 1
-		return !col || getline('.')[col - 1]  =~# '\s'
-	endfunction<Paste>
-
-  "================================================
-
-  " Plug 'autozimu/LanguageClient-neovim', {
-  "   \ 'branch': 'next',
-  "   \ 'do': 'bash install.sh',
-  "   \ }
-
-  " Syntax
-  Plug 'pangloss/vim-javascript'
-  Plug 'mxw/vim-jsx'
-  Plug 'digitaltoad/vim-pug'
-  Plug 'iloginow/vim-stylus'
-  Plug 'vim-ruby/vim-ruby'
-  Plug 'tpope/vim-rails'
-  Plug 'leafgarland/typescript-vim'
-  " Plug 'flowtype/vim-flow'
-
-  " Color Scheme
-  Plug 'iCyMind/NeoSolarized'
-
-  " Pretty status line
-  Plug 'itchyny/lightline.vim'
-
-  " Check syntax
-  Plug 'w0rp/ale'
-
-  " Working with pair symbols
-  Plug 'tpope/vim-surround'
-
-  " Make . (repeat) operator useful for plugins
-  Plug 'tpope/vim-repeat'
-
-  " Show marks
-  Plug 'kshenoy/vim-signature'
-
-  " Graphical undo tree
-  Plug 'sjl/gundo.vim'
-
-  " Toggle loclist and quickfix by \l and \q
-  Plug 'Valloric/ListToggle'
-
-  " Open code in github on gho
-  Plug 'prakashdanish/vim-githubinator'
-
-  " Highlight current word
-  Plug 'RRethy/vim-illuminate'
-
-  " UML preview
-  Plug 'scrooloose/vim-slumlord'
-
-call plug#end()
-
-" ====================== PLUGINS SETTINGS =================
-
-" ===============
-" " YouCompleteMe
-" set completeopt-=preview
-" let g:ycm_complete_in_comments = 1
-" " let g:ycm_filepath_completion_use_working_dir = 1
-" let g:ycm_collect_identifiers_from_comments_and_strings = 1
-" " let g:ycm_collect_identifiers_from_tags_files = 1
+" Navigation on wrapped lines
+nmap <silent> j gj
+nmap <silent> k gk
 "
+" Don't require to save hidden buffers
+set hidden
 
-" ==============================
-" LSP
-" let g:LanguageClient_serverCommands = {
-"     \ 'javascript': ['flow-language-server', '--stdio', '--try-flow-bin'],
-"     \ 'javascript.jsx': ['flow-language-server', '--stdio', '--try-flow-bin'],
-"     \ }
+" History size
+set history=5000
+
+" Directories for swp files
+" set backupdir=~/.vim/backup//
+" set directory=~/.vim/backup//
+set nobackup
+set noswapfile
+
+" Ctrl + hjkl to navigate between windows
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+
+" ============================
+" Navigating tabs
+
+" New tab on Cmd+t
+map <D-t> :tabnew<CR>
+
+" Double leader opens file in new tab
+map <Leader><Leader> :tabe %<CR>
+" Go to tab n on <Leader>n
+" map <leader>1 1gt
+" map <leader>2 2gt
+" map <leader>3 3gt
+" map <leader>4 4gt
+" map <leader>5 5gt
+" map <leader>6 6gt
+" map <leader>7 7gt
+" map <leader>8 8gt
+" map <leader>9 8gt
+
+map <D-S-}> :tabn<CR>
+map <D-S-{> :tabp<CR>
+
+" Shit+Cmd+Ctrl+] to move tab left
+" Shit+Cmd+Ctrl+[ to move tab right
+map <C-S-D-{> :tabm -1<CR>
+map <C-S-D-}> :tabm +1<CR>
+
+" Scroll when you are 5 lines close to the edge
+set scrolloff=5
+
+" Invisible characters
+set list
+set listchars=eol:¬,tab:→\ ,nbsp:_,precedes:(,extends:),trail:·
+
+set number
+
+" Indent on < or >
+vnoremap < <gv
+vnoremap > >gv
+
+" Copy current filename to clipboard by `i
+map `i :let @*=expand("%")<CR>
+map <Leader>i :let @*=expand("%")<CR>
+
+" Turn on vim-repeat
+silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
+
+" Remove scrollbars in mvim
+set guioptions=
+
+" Limit syntax for long lines to increase speed
+set synmaxcol=400
+
+" Enable mouse in terminal
+" set mouse=a
+
+" Trying to make vim faster
+" https://vi.stackexchange.com/questions/10495/most-annoying-slow-down-of-a-plain-text-editor
+set regexpengine=1
+set ttyfast
+set lazyredraw
+
+" Disable {visual}u lowercase. Always hit it by accident.
+vmap u <Nop>
+
+" Make gf work for node custom root
+set path+=$PWD/**3
+
+" Paste in visual mode don't replace current buffer
+" vnoremap p "_dp
+
+" `y moves last saved register to yank register 0
+map `y :let @0=@"<CR>
+" `p in paste yanked register
+map `p "0p
+" map `b :call RotateBuffers()<CR>
 "
-" let g:LanguageClient_diagnosticsEnable = 0
-"
-" let g:LanguageClient_hoverPreview = 'Always'
-" function ToggleLanguageClientHover()
-"   let l:hoverCursor = col('.') . '|' . line('.')
-"   if exists('b:LanguageClient_hoverCursor') && b:LanguageClient_hoverCursor == l:hoverCursor
-"     pclose
-"     let b:LanguageClient_hoverCursor = ''
-"   else
-"     call LanguageClient#textDocument_hover()
-"     let b:LanguageClient_hoverCursor = l:hoverCursor
-"   endif
+" function RotateBuffers()
+"   let @"=@1
+"   let @1=@2
+"   let @2=@3
+"   let @3=@4
+"   let @4=@5
+"   let @5=@6
+"   let @6=@7
+"   let @7=@8
+"   let @8=@9
+"   echom @"
 " endfunction
-" autocmd FileType javascript,javascript.jsx nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" autocmd FileType javascript,javascript.jsx nnoremap <silent> K :call ToggleLanguageClientHover()<CR>
 
-" ====================
-" Deoplete options
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#enable_smart_case = 1
-" let g:deoplete#auto_completion_start_length = 0
-" let g:deoplete#file#enable_buffer_path = 1
-" let g:deoplete#async_timeout = 10
-" let g:deoplete#auto_complete_delay = 10
-"
-" call deoplete#custom#source('LanguageClient', 'min_pattern_length', 1)
-" call deoplete#custom#source('buffer', 'min_pattern_length', 1)
-" call deoplete#custom#source('file', 'min_pattern_length', 0)
-"
-" autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-"
-" let g:deoplete#sources = {}
-" let g:deoplete#sources._ = ['buffer', 'file']
-" let g:deoplete#sources['javascript'] = ['buffer', 'file', 'LanguageClient']
-" let g:deoplete#sources['javascript.jsx'] = ['buffer', 'file', 'LanguageClient']
+" Match tags by %
+source $VIMRUNTIME/macros/matchit.vim
 
-" Don't show preview window on top when select autocomplete item
+" Don't jump on search word
+nnoremap * *``
+nnoremap # #``
+
+" hide | on window split (space after \ is important)
+set fillchars+=vert:\ 
+
+" Folding
+nnoremap <Space> za
+set nofoldenable
+set foldmethod=indent
+set foldlevel=99999
+
+if filereadable(expand("~/.config/nvim/vv.vim"))
+  source ~/.config/nvim/vv.vim
+endif
+
+" Load specifics to this host
+if filereadable(expand("~/.config/nvim/local/local.vim"))
+  source ~/.config/nvim/local/local.vim
+endif
+
+" ======================================================================
+" Plugins and their settings
+" ======================================================================
+call plug#begin('~/.local/share/nvim/plugged')
+
+" ==================================================
+" FZF
+" ==================================================
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Show git files only (respect .gitignore)
+map <Leader>t :GFiles<CR>
+" FZF all files
+map <Leader>r :Files<CR>
+
+" ==================================================
+" NERD tree
+" ==================================================
+Plug 'scrooloose/nerdtree'
+
+map <Leader>a :NERDTreeToggle<CR>
+map <Leader>z :NERDTreeFind<CR>
+let g:NERDTreeMinimalUI=1
+let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeNoSwitchTabs=1
+let g:NERDTreeHighlightCursorline=0
+
+" autocmd VimEnter * NERDTree
+
+" How can I close vim if the only window left open is a NERDTree? 
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" How can I open NERDTree automatically when vim starts up on opening a directory?
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"
+" " How can I open a NERDTree automatically when vim starts up if no files were specified?
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Remove right scrollbar
+" set guioptions-=L
+
+" ===========================================================
+" gc for comment
+" ===========================================================
+Plug 'tomtom/tcomment_vim'
+
+" ===========================================================
+" Leader ig to show indent
+" ===========================================================
+Plug 'nathanaelkane/vim-indent-guides'
+
+" ===========================================================
+" Leader f for search and The Silver Searcher
+" https://github.com/mileszs/ack.vim
+" https://robots.thoughtbot.com/faster-grepping-in-vim
+" ===========================================================
+Plug 'mileszs/ack.vim'
+if executable('ag')
+  let g:ackprg = 'ag --nogroup --nocolor --column'
+endif
+" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+nnoremap <Leader>f :Ack!<Space>
+
+" ======================================================
+" LustyJuggler
+" ======================================================
+Plug 'sjbach/lusty'
+map <Leader>s :LustyJuggler<CR>
+map <Leader>b :LustyBufferExplorer<CR>
+map <Leader>d :LustyFilesystemExplorerFromHere<CR>
+
+" ====================================================================
+" Fix copypaste
+" ====================================================================
+Plug 'ConradIrwin/vim-bracketed-paste'
+
+" ====================================================================
+" File utils (:Rename, :Move, :Delete etc)
+" ====================================================================
+Plug 'tpope/vim-eunuch'
+
+" ======================================================
+" COC (autocomplete)
+" ======================================================
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction<Paste>
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  let l:hoverCursor = col('.') . '|' . line('.')
+  if exists('b:coc_hoverCursor') && b:coc_hoverCursor == l:hoverCursor
+    pclose
+    let b:coc_hoverCursor = ''
+  else
+    if &filetype == 'vim'
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+    let b:coc_hoverCursor = l:hoverCursor
+  endif
+endfunction
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+let g:coc_snippet_next = '<TAB>'
+let g:coc_snippet_prev = '<S-TAB>'
+
 set completeopt-=preview
 
-" ===============
+" ================================================
+" Syntax
+" ================================================
+Plug 'pangloss/vim-javascript'
+let g:javascript_plugin_flow = 1
+
+Plug 'mxw/vim-jsx'
+let g:jsx_ext_required = 0    " Allow JSX in normal JS files
+
+Plug 'digitaltoad/vim-pug'
+Plug 'iloginow/vim-stylus'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'leafgarland/typescript-vim'
+
+" ====================================================================
+" Color Scheme
+" ====================================================================
+Plug 'iCyMind/NeoSolarized'
+
+" ================================================
 " Lightline
+" ================================================
+Plug 'itchyny/lightline.vim'
 
 set background=dark
 let g:lightline = {
@@ -283,37 +403,10 @@ function! s:MaybeUpdateLightline()
   end
 endfunction
 
-" ===============
-" NERD tree
-map <Leader>a :NERDTreeToggle<CR>
-map <Leader>z :NERDTreeFind<CR>
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeQuitOnOpen=1
-let g:NERDTreeNoSwitchTabs=1
-let g:NERDTreeHighlightCursorline=0
-
-" autocmd VimEnter * NERDTree
-
-" How can I close vim if the only window left open is a NERDTree? 
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-" How can I open NERDTree automatically when vim starts up on opening a directory?
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
-"
-" " How can I open a NERDTree automatically when vim starts up if no files were specified?
-" autocmd StdinReadPre * let s:std_in=1
-" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" Remove right scrollbar
-" set guioptions-=L
-
-" ===============
-" ZoomWin
-" map <Leader><Leader> :ZoomWin<CR>
-
-" ===============
-" ALE
+" =================================================
+" ALE (async linter)
+" =================================================
+Plug 'w0rp/ale'
 
 let g:ale_sign_offset = 1000
 
@@ -325,12 +418,13 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \ 'ruby': ['rubocop'],
 \ 'javascript': ['eslint'],
+\ 'json': ['fixjson', 'prettier'],
 \}
 
 let g:ale_sign_error = "🚫"
 let g:ale_sign_warning = "⚠️ "
 
-" let g:ale_lint_on_text_changed = "never" " only lint on file save
+let g:ale_lint_on_text_changed = "never" " only lint on file save
 
 " Run ale fixer on `l
 nmap `l <Plug>(ale_fix)
@@ -341,249 +435,46 @@ let g:ale_set_quickfix = 0
 
 " let g:airline#extensions#ale#enabled = 1
 
-" ===============
-" CommandT
-let g:CommandTMaxHeight=20
-let g:CommandTAlwaysShowDotFiles=1 " show hidden files
+" =================================================
+" Working with pair symbols
+" ====================================================================
+Plug 'tpope/vim-surround'
 
-" refresh command-t on \r
-" map <Leader>r :CommandTFlush<CR>
+" ====================================================================
+" Make . (repeat) operator useful for plugins
+" ====================================================================
+Plug 'tpope/vim-repeat'
 
-" Show git files only (respect .gitignore)
-map <Leader>t :GFiles<CR>
-" FZF all files
-map <Leader>r :Files<CR>
+" ====================================================================
+" Show marks
+" ====================================================================
+Plug 'kshenoy/vim-signature'
 
-" Leader b for buffers list
-" nnoremap <silent> <leader>b :CommandTMRU<CR>
-set wildignore+=*/tmp,*/node_modules,.DS_Store,*/.bundle
-
-" Disable 'smart goto' https://github.com/wincent/command-t/blob/master/doc/command-t.txt#L617
-let g:CommandTAcceptSelectionTabCommand = 'tabe'
-let g:CommandTAcceptSelectionSplitCommand = 'sp'
-let g:CommandTAcceptSelectionVSplitCommand = 'vs'
-let g:CommandTAcceptSelectionCommand = 'e'
-
-" enable esc for command-t in terminal
-" https://wincent.com/blog/tweaking-command-t-and-vim-for-use-in-the-terminal-and-tmux
-" if &term =~ "xterm" || &term =~ "screen"
-"   let g:CommandTCancelMap = ['<ESC>', '<C-c>']
-" end
-
-" ===============
-" LustyJuggler
-map <Leader>s :LustyJuggler<CR>
-map <Leader>b :LustyBufferExplorer<CR>
-map <Leader>d :LustyFilesystemExplorerFromHere<CR>
-
-
-" ===============
-" The Silver Searcher
-" https://github.com/mileszs/ack.vim
-" https://robots.thoughtbot.com/faster-grepping-in-vim
-if executable('ag')
-  let g:ackprg = 'ag --nogroup --nocolor --column'
-endif
-" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-nnoremap <Leader>f :Ack!<Space>
-
-
-" =============
-" JSX
-let g:jsx_ext_required = 0    " Allow JSX in normal JS files
-
-" =======
-" Javascript
-let g:javascript_plugin_flow = 1
-
-" =======
-" Flow
-let g:flow#showquickfix = 0
-
-" =====================
-" toggle gundo
+" ====================================================================
+" Undo tree
+" ====================================================================
+Plug 'sjl/gundo.vim'
 nnoremap `u :GundoToggle<CR>
 nnoremap <Leader>u :GundoToggle<CR>
 
-" ================= GENERAL SETTINGS ===================
-language en_US                " sets the language of the messages / ui (vim)
-" set ruler                   " Info in the bottom right
-syntax enable
+" ====================================================================
+" Toggle loclist and quickfix by \l and \q
+" ====================================================================
+Plug 'Valloric/ListToggle'
 
-set laststatus=2
+" ====================================================================
+" Open code in github on gho
+" ====================================================================
+Plug 'prakashdanish/vim-githubinator'
 
-set encoding=utf-8
-set showcmd                     " display incomplete commands
-filetype plugin indent on       " load file type plugins + indentation
+" ====================================================================
+" Highlight current word
+" ====================================================================
+Plug 'RRethy/vim-illuminate'
 
-set wildmenu                    " visual autocomplete for command menu
-set lazyredraw                  " redraw only when we need to.
+" ====================================================================
+" UML preview
+" ====================================================================
+Plug 'scrooloose/vim-slumlord'
 
-" Whitespace
-"set nowrap                     " don't wrap lines
-set tabstop=2 shiftwidth=2      " a tab is two spaces (or set this to 4)
-set expandtab                   " use spaces, not tabs (optional)
-set backspace=indent,eol,start  " backspace through everything in insert mode
-
-" Searching
-set hlsearch                    " highlight matches
-set incsearch                   " incremental searching
-set ignorecase                  " searches are case insensitive...
-set smartcase                   " ... unless they contain at least one capital letter
-
-set wrap                        " Wrap by default
-
-" Navigation on wrapped lines
-nmap <silent> j gj
-nmap <silent> k gk
-
-set hidden                      " Don't require to save buffer on switch
-
-" History size
-set history=5000
-
-" Directories for swp files
-" set backupdir=~/.vim/backup//
-" set directory=~/.vim/backup//
-set nobackup
-set noswapfile
-
-" Ctrl + hjkl to navigate between windows
-map <C-h> <C-w>h
-map <C-j> <C-w>j
-map <C-k> <C-w>k
-map <C-l> <C-w>l
-
-
-" ============================
-" Navigating tabs
-
-" New tab on Cmd+t
-map <D-t> :tabnew<CR>
-
-" Double leader opens file in new tab
-map <Leader><Leader> :tabe %<CR>
-" Leader ] does the same
-map <Leader>] :tabe %<CR>
-map `] :tabe %<CR>
-" map <Leader>+ :tabnew<CR>
-
-" Go to tab n on <Leader>n
-" map <leader>1 1gt
-" map <leader>2 2gt
-" map <leader>3 3gt
-" map <leader>4 4gt
-" map <leader>5 5gt
-" map <leader>6 6gt
-" map <leader>7 7gt
-" map <leader>8 8gt
-" map <leader>9 8gt
-
-map <D-S-}> :tabn<CR>
-map <D-S-{> :tabp<CR>
-
-" Shit+Alt+] to move tab left
-" Shit+Alt+[ to move tab right
-map ” :tabm -1<CR>
-map ’ :tabm +1<CR>
-" map <leader>[ :tabm -1<CR>              " Move tab left
-" map <leader>] :tabm +1<CR>              " Move tab right
-
-
-set scrolloff=5
-
-" ======================
-" Invisible characters
-set list
-set listchars=eol:¬,tab:→\ ,nbsp:_,precedes:(,extends:),trail:·
-
-set number
-
-" ===================
-" Indent
-" pressing < or > will let you iunident selected lines
-vnoremap < <gv
-vnoremap > >gv
-
-" ===========
-" Copy current filename to clipboard by `i
-map `i :let @*=expand("%")<CR>
-map <Leader>i :let @*=expand("%")<CR>
-
-" Turn on vim-repeat
-silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
-
-" Remove scrollbars in mvim
-set guioptions=
-
-" Limit syntax for long lines to increase speed
-set synmaxcol=200
-
-" Enable mouse in terminal
-" set mouse=a
-
-" Trying to make vim faster
-" https://vi.stackexchange.com/questions/10495/most-annoying-slow-down-of-a-plain-text-editor
-set regexpengine=1
-set ttyfast
-set lazyredraw
-
-" Disable {visual}u lowercase. Always hit it by accident.
-vmap u <Nop>
-
-" Make gf work for node custom root
-set path+=$PWD/**3
-
-" Paste in visual mode don't replace current buffer
-" vnoremap p "_dp
-
-" `y moves last saved register to yank register 0
-map `y :let @0=@"<CR>
-" `p in paste yanked register
-map `p "0p
-" map `b :call RotateBuffers()<CR>
-"
-" function RotateBuffers()
-"   let @"=@1
-"   let @1=@2
-"   let @2=@3
-"   let @3=@4
-"   let @4=@5
-"   let @5=@6
-"   let @6=@7
-"   let @7=@8
-"   let @8=@9
-"   echom @"
-" endfunction
-
-" Open vim in max width
-" if has("gui_running")
-"   set lines=999 columns=9999
-"   " set fu
-" end
-
-" Match tags by %
-source $VIMRUNTIME/macros/matchit.vim
-
-" Don't jump on search word
-nnoremap * *``
-nnoremap # #``
-
-" hide | on window split (space after \ is important)
-set fillchars+=vert:\ 
-
-
-" Folding
-nnoremap <Space> za
-set nofoldenable
-set foldmethod=indent
-set foldlevel=99999
-
-if filereadable(expand("~/.config/nvim/vv.vim"))
-  source ~/.config/nvim/vv.vim
-endif
-
-" Load specifics to this host
-if filereadable(expand("~/.config/nvim/local/local.vim"))
-  source ~/.config/nvim/local/local.vim
-endif
+call plug#end()
