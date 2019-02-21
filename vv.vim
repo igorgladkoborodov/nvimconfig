@@ -9,5 +9,6 @@ if exists('g:vv')
   VVset windowwidth=60%
   VVset windowleft=0
   VVset windowtop=0
-  VVset noreloadchanged
+  VVset reloadchanged
+  " VVset fullscreen
 endif

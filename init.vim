@@ -65,16 +65,6 @@ map <D-t> :tabnew<CR>
 
 " Double leader opens file in new tab
 map <Leader><Leader> :tabe %<CR>
-" Go to tab n on <Leader>n
-" map <leader>1 1gt
-" map <leader>2 2gt
-" map <leader>3 3gt
-" map <leader>4 4gt
-" map <leader>5 5gt
-" map <leader>6 6gt
-" map <leader>7 7gt
-" map <leader>8 8gt
-" map <leader>9 8gt
 
 map <D-S-}> :tabn<CR>
 map <D-S-{> :tabp<CR>
@@ -125,30 +115,11 @@ vmap u <Nop>
 " Make gf work for node custom root
 set path+=$PWD/**3
 
-" Paste in visual mode don't replace current buffer
-" vnoremap p "_dp
-
 " `y moves last saved register to yank register 0
 map `y :let @0=@"<CR>
 " `p in paste yanked register
 map `p "0p
-" map `b :call RotateBuffers()<CR>
-"
-" function RotateBuffers()
-"   let @"=@1
-"   let @1=@2
-"   let @2=@3
-"   let @3=@4
-"   let @4=@5
-"   let @5=@6
-"   let @6=@7
-"   let @7=@8
-"   let @8=@9
-"   echom @"
-" endfunction
 
-" Match tags by %
-source $VIMRUNTIME/macros/matchit.vim
 
 " Don't jump on search word
 nnoremap * *``
@@ -163,6 +134,7 @@ set nofoldenable
 set foldmethod=indent
 set foldlevel=99999
 
+" Specific VV config
 if filereadable(expand("~/.config/nvim/vv.vim"))
   source ~/.config/nvim/vv.vim
 endif
@@ -171,6 +143,7 @@ endif
 if filereadable(expand("~/.config/nvim/local/local.vim"))
   source ~/.config/nvim/local/local.vim
 endif
+
 
 " ======================================================================
 " Plugins and their settings
@@ -186,6 +159,7 @@ Plug 'junegunn/fzf.vim'
 map <Leader>t :GFiles<CR>
 " FZF all files
 map <Leader>r :Files<CR>
+
 
 " ==================================================
 " NERD tree
@@ -215,15 +189,18 @@ let g:NERDTreeHighlightCursorline=0
 " Remove right scrollbar
 " set guioptions-=L
 
+
 " ===========================================================
 " gc for comment
 " ===========================================================
 Plug 'tomtom/tcomment_vim'
 
+
 " ===========================================================
 " Leader ig to show indent
 " ===========================================================
 Plug 'nathanaelkane/vim-indent-guides'
+
 
 " ===========================================================
 " Leader f for search and The Silver Searcher
@@ -237,6 +214,7 @@ endif
 " command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
 nnoremap <Leader>f :Ack!<Space>
 
+
 " ======================================================
 " LustyJuggler
 " ======================================================
@@ -245,65 +223,18 @@ map <Leader>s :LustyJuggler<CR>
 map <Leader>b :LustyBufferExplorer<CR>
 map <Leader>d :LustyFilesystemExplorerFromHere<CR>
 
+
 " ====================================================================
 " Fix copypaste
 " ====================================================================
 Plug 'ConradIrwin/vim-bracketed-paste'
+
 
 " ====================================================================
 " File utils (:Rename, :Move, :Delete etc)
 " ====================================================================
 Plug 'tpope/vim-eunuch'
 
-" ======================================================
-" COC (autocomplete)
-" ======================================================
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction<Paste>
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  let l:hoverCursor = col('.') . '|' . line('.')
-  if exists('b:coc_hoverCursor') && b:coc_hoverCursor == l:hoverCursor
-    pclose
-    let b:coc_hoverCursor = ''
-  else
-    if &filetype == 'vim'
-      execute 'h '.expand('<cword>')
-    else
-      call CocAction('doHover')
-    endif
-    let b:coc_hoverCursor = l:hoverCursor
-  endif
-endfunction
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use <cr> for confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-let g:coc_snippet_next = '<TAB>'
-let g:coc_snippet_prev = '<S-TAB>'
-
-set completeopt-=preview
 
 " ================================================
 " Syntax
@@ -320,10 +251,12 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
 Plug 'leafgarland/typescript-vim'
 
+
 " ====================================================================
 " Color Scheme
 " ====================================================================
 Plug 'iCyMind/NeoSolarized'
+
 
 " ================================================
 " Lightline
@@ -403,6 +336,7 @@ function! s:MaybeUpdateLightline()
   end
 endfunction
 
+
 " =================================================
 " ALE (async linter)
 " =================================================
@@ -417,7 +351,7 @@ let g:ale_linters = {
 
 let g:ale_fixers = {
 \ 'ruby': ['rubocop'],
-\ 'javascript': ['eslint'],
+\ 'javascript': ['prettier'],
 \ 'json': ['fixjson', 'prettier'],
 \}
 
@@ -433,22 +367,110 @@ let g:ale_open_list = 0
 let g:ale_set_loclist = 0
 let g:ale_set_quickfix = 0
 
-" let g:airline#extensions#ale#enabled = 1
+nnoremap <silent> I :call <SID>toggle_detail()<CR>
+function! s:toggle_detail()
+  if exists('b:ale_detail') && b:ale_detail == 1
+    pclose
+    let b:ale_detail = 0
+  else
+    ALEDetail
+    let b:ale_detail = 1
+  endif
+endfunction
+
+
+" ====================================================================
+" Completion
+" ====================================================================
+
+" assuming you're using vim-plug: https://github.com/junegunn/vim-plug
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+set completeopt=noinsert,menuone,noselect
+
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+
+" Start search from the first character
+let g:ncm2#complete_length=[[1,1]]
+let g:ncm2#popup_delay=50
+let g:ncm2#popup_limit=10
+
+ " CTRL-C doesn't trigger the InsertLeave autocmd . map to <ESC> instead.
+inoremap <c-c> <ESC>
+
+" When the <Enter> key is pressed while the popup menu is visible, it only
+" hides the menu. Use this mapping to close the menu and also start a new
+" line.
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+
+" ======================================================
+" Language Server
+" ======================================================
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'ncm2/ncm2-vim-lsp'
+
+let g:lsp_diagnostics_enabled=0
+let g:lsp_diagnostics_echo_cursor=0
+let g:lsp_signs_enabled=0
+
+" Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  let l:hoverCursor = col('.') . '|' . line('.')
+  if exists('b:lsp_hoverCursor') && b:lsp_hoverCursor == l:hoverCursor
+    pclose
+    let b:lsp_hoverCursor = ''
+  else
+    if &filetype == 'vim'
+      execute 'h '.expand('<cword>')
+    else
+      LspHover
+    endif
+    let b:lsp_hoverCursor = l:hoverCursor
+  endif
+endfunction
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(lsp-definition)
+
+if executable('flow')
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'flow',
+    \ 'cmd': {server_info->['flow', 'lsp']},
+    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '.flowconfig'))},
+    \ 'whitelist': ['javascript', 'javascript.jsx'],
+    \ })
+endif
+
 
 " =================================================
 " Working with pair symbols
 " ====================================================================
 Plug 'tpope/vim-surround'
 
+
 " ====================================================================
 " Make . (repeat) operator useful for plugins
 " ====================================================================
 Plug 'tpope/vim-repeat'
 
+
 " ====================================================================
 " Show marks
 " ====================================================================
 Plug 'kshenoy/vim-signature'
+
 
 " ====================================================================
 " Undo tree
@@ -457,24 +479,42 @@ Plug 'sjl/gundo.vim'
 nnoremap `u :GundoToggle<CR>
 nnoremap <Leader>u :GundoToggle<CR>
 
-" ====================================================================
-" Toggle loclist and quickfix by \l and \q
-" ====================================================================
-Plug 'Valloric/ListToggle'
-
-" ====================================================================
-" Open code in github on gho
-" ====================================================================
-Plug 'prakashdanish/vim-githubinator'
 
 " ====================================================================
 " Highlight current word
 " ====================================================================
 Plug 'RRethy/vim-illuminate'
 
+
 " ====================================================================
-" UML preview
+" Insert jsdoc
 " ====================================================================
-Plug 'scrooloose/vim-slumlord'
+Plug 'heavenshell/vim-jsdoc'
+let g:jsdoc_enable_es6=1
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_input_description=1
+
+
+" ====================================================================
+" Auto close brackets
+" ====================================================================
+Plug 'jiangmiao/auto-pairs'
+let g:AutoPairsFlyMode = 1
+let g:AutoPairsShortcutBackInsert = '<D-b>'
+let g:AutoPairsOnlyWhitespace = 1
+
+
+" ====================================================================
+" Auto close tags
+" ====================================================================
+Plug 'alvan/vim-closetag'
+let g:closetag_filenames = '*.html,*.jsx,*.xml,*.erb'
+let g:closetag_xhtml_filenames = '*.html,*.jsx,*.xml,*.erb'
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+let g:closetag_shortcut = '>'
+
 
 call plug#end()

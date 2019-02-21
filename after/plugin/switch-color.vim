@@ -1,33 +1,10 @@
-" function ToggleFont()
-"   let g:font_variant = exists('g:font_variant') ? (g:font_variant + 1)%4 : 0
-"   if g:font_variant == 0
-"     set guifont=Monaco:h12
-"     set linespace=-1
-"   elseif g:font_variant == 1
-"     set guifont=Menlo:h11
-"     set linespace=1
-"   elseif g:font_variant == 2
-"     set guifont=SF\ Mono\ Regular:h12
-"     set linespace=1
-"   elseif g:font_variant == 3
-"     set guifont=SF\ Mono\ Light:h12
-"     set linespace=1
-"   endif
-" endfunction
-"
-" function ToggleFontTo(font_variant)
-"   let g:font_variant = a:font_variant - 1
-"   call ToggleFont()
-" endfunction
-"
 function ToggleColors()
   let g:colors_variant = exists('g:colors_variant') ? (g:colors_variant + 1)%2 : 0
   if g:colors_variant == 0
     set background=dark
     colorscheme NeoSolarized
-    " call ToggleFontTo(3)
     hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#ff2600 guibg=#073642  gui=NONE
-    hi ALEWarningSign ctermfg=10  ctermbg=0  guifg=#FFCC01  guibg=#073642  gui=NONE
+    hi! link ALEWarningSign AleErrorSign
     hi CursorLine ctermfg=NONE ctermbg=236 guifg=NONE guibg=#002E38 guisp=#93a1a1 cterm=NONE gui=NONE
     hi illuminatedWord ctermfg=NONE ctermbg=236 guifg=NONE guibg=#003e4d guisp=#93a1a1 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=160 guifg=#fdf6e3 guibg=#dc322f guisp=NONE cterm=NONE gui=NONE
@@ -37,9 +14,8 @@ function ToggleColors()
   elseif g:colors_variant == 1
     set background=light
     colorscheme NeoSolarized
-    " call ToggleFontTo(2)
     hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#c34915  guibg=#eee8d5  gui=NONE
-    hi ALEWarningSign ctermfg=10  ctermbg=0  guifg=#b58901  guibg=#eee8d5  gui=NONE
+    hi! link ALEWarningSign AleErrorSign
     hi CursorLine ctermfg=NONE ctermbg=254 guifg=NONE guibg=#F7F1DF guisp=#586e75 cterm=NONE gui=NONE
     hi illuminatedWord ctermfg=NONE ctermbg=254 guifg=NONE guibg=#f5edd6 guisp=#586e75 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=32 guifg=#fdf6e3 guibg=#268bd2 guisp=NONE cterm=NONE gui=NONE
@@ -97,6 +73,5 @@ else
   call ToggleColorsTo(0)
 end
 
-" map <F5> :call ToggleFont()<CR>
 map <F6> :call ToggleColors()<CR>
 map <F7> :call ToggleSpell()<CR>
