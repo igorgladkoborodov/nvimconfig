@@ -1,0 +1,18 @@
+{
+  "tsserver.enableJavascript": false,
+  "languageserver": {
+    "flow": {
+      "command": "flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"]
+    }
+  },
+  "diagnostic.errorSign": "🚫",
+  "diagnostic.warningSign": "⚠️",
+  "diagnostic.infoSign": "ℹ️",
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true
+}

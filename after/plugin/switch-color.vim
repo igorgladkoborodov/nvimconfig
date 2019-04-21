@@ -4,27 +4,53 @@ function ToggleColors()
     set background=dark
     colorscheme NeoSolarized
     hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#ff2600 guibg=#073642  gui=NONE
-    hi! link ALEWarningSign AleErrorSign
     hi CursorLine ctermfg=NONE ctermbg=236 guifg=NONE guibg=#002E38 guisp=#93a1a1 cterm=NONE gui=NONE
     hi illuminatedWord ctermfg=NONE ctermbg=236 guifg=NONE guibg=#003e4d guisp=#93a1a1 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=160 guifg=#fdf6e3 guibg=#dc322f guisp=NONE cterm=NONE gui=NONE
-    hi Normal ctermfg=247 ctermbg=235 guifg=#93a1a1 guibg=#00232B guisp=NONE cterm=NONE gui=NONE
-    hi VertSplit guibg=#073642
-    hi SignColumn guibg=#073642
+    hi Normal ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#00232B guisp=NONE cterm=NONE gui=NONE
+    hi VertSplit ctermbg=0 guibg=#073642
+    hi SignColumn ctermbg=0 guibg=#073642
+
+    hi CocFloat ctermbg=247 ctermfg=235 guibg=#93a1a1 guifg=#00232B
   elseif g:colors_variant == 1
     set background=light
     colorscheme NeoSolarized
     hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#c34915  guibg=#eee8d5  gui=NONE
-    hi! link ALEWarningSign AleErrorSign
     hi CursorLine ctermfg=NONE ctermbg=254 guifg=NONE guibg=#F7F1DF guisp=#586e75 cterm=NONE gui=NONE
     hi illuminatedWord ctermfg=NONE ctermbg=254 guifg=NONE guibg=#f5edd6 guisp=#586e75 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=32 guifg=#fdf6e3 guibg=#268bd2 guisp=NONE cterm=NONE gui=NONE
-    hi VertSplit guibg=#eee8d5
-    hi SignColumn guibg=#eee8d5
+    hi VertSplit ctermbg=7 guibg=#eee8d5
+    hi SignColumn ctermbg=7 guibg=#eee8d5
+
+    hi CocFloat ctermbg=247 ctermfg=235 guibg=#93a1a1 guifg=#00232B
   endif
 
   hi! link EndOfBuffer NonText
   hi clear MatchTag
+
+  hi! link ALEWarningSign AleErrorSign
+
+  hi! link CocErrorSign AleErrorSign
+  hi! link CocWarningSign AleErrorSign
+  hi! link CocInfoSign AleErrorSign
+  hi! link CocHintSign AleErrorSign
+
+  hi CocUnderline gui=undercurl term=undercurl
+  hi default link CocErrorHighlight   CocUnderline
+  hi default link CocWarningHighlight CocUnderline
+  hi default link CocInfoHighlight    CocUnderline
+  hi default link CocHintHighlight    CocUnderline
+
+  hi! link CocFloating Pmenu
+  hi! link CocErrorFloat CocFloating
+  hi! link CocWarningFloat CocFloating
+  hi! link CocInfoFloat CocFloating
+  hi! link CocHintFloat CocFloating
+
+  hi default CocSelectedText ctermfg=Red     guifg=#fb4934
+  hi default CocCodeLens     ctermfg=Gray    guifg=#999999
+  hi default link CocListMode ModeMsg
+  hi default link CocListPath Comment
 
   " Make lightline switch light/dark background
   runtime autoload/lightline/colorscheme/solarized.vim
