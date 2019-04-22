@@ -3,6 +3,7 @@ filetype off                  " required
 
 let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
+let g:ruby_host_prog = '~/.rbenv/versions/2.4.1/bin/neovim-ruby-host'
 
 language en_US                " sets the language of the messages / ui (vim)
 " set ruler                   " Info in the bottom right
@@ -252,8 +253,16 @@ Plug 'digitaltoad/vim-pug'
 Plug 'iloginow/vim-stylus'
 Plug 'vim-ruby/vim-ruby'
 Plug 'tpope/vim-rails'
-Plug 'leafgarland/typescript-vim'
 
+Plug 'leafgarland/typescript-vim'
+let g:typescript_indent_disable = 0
+
+Plug 'ianks/vim-tsx'
+"
+" autocmd BufNewFile,BufRead *.ts set filetype=typescript
+" autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
+" autocmd BufNewFile,BufRead *.ts set syntax=typescript
+" autocmd BufNewFile,BufRead *.tsx set syntax=typescript.tsx
 
 " ====================================================================
 " Color Scheme
@@ -272,7 +281,7 @@ let g:lightline = {
 \ 'colorscheme': 'solarized',
 \ 'active': {
 \   'left': [ [ 'paste' ], ['relativepath'] ],
-\   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus'] ]
+\   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus', 'linter_warnings', 'linter_errors' ] ]
 \ },
 \ 'inactive': {
 \   'left': [ ['relativepath'] ],
@@ -288,13 +297,17 @@ let g:lightline = {
 \   'pwd': systemlist('dirs')[0],
 \ },
 \ 'component_expand': {
+\   'linter_warnings': 'LightlineLinterWarnings',
+\   'linter_errors': 'LightlineLinterErrors',
 \   'time': 'LightlineTime'
 \ },
 \ 'component_type': {
 \   'readonly': 'warning',
+\   'linter_warnings': 'custom',
+\   'linter_errors': 'custom'
 \ },
 \ 'component_function': {
-\   'cocstatus': 'coc#status',
+\   'cocstatus': 'CocStatus'
 \ },
 \ 'mode_map': {
 \   'n' : '',
@@ -311,16 +324,39 @@ let g:lightline = {
 \ }
 \ }
 
-
-
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
-
 function! LightlineTime() abort
   return strftime('%I:%M')
 endfunction
 
+function! CocStatus() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, get(g:, 'coc_status_error_sign') . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, get(g:, 'coc_status_warning_sign') . info['warning'])
+  endif
+  return join(msgs, ' ')
+endfunction
+
+
+function! LightlineLinterWarnings() abort
+  let l:problems = ale#engine#GetLoclist(bufnr(''))
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:all_non_errors == 0 ? '' : printf('⚠️ %d:L%d', all_non_errors, problems[0].lnum)
+endfunction
+
+function! LightlineLinterErrors() abort
+  let l:problems = ale#engine#GetLoclist(bufnr(''))
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:all_errors == 0 ? '' : printf('🚫%d:L%d', all_errors, problems[0].lnum)
+endfunction
 
 " =================================================
 " Working with pair symbols
@@ -368,9 +404,10 @@ let g:jsdoc_input_description=1
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 
 set signcolumn=yes
 
@@ -429,10 +466,51 @@ Plug 'prettier/vim-prettier', {
     \ 'lua',
     \ 'php',
     \ 'python',
-    \ 'ruby',
     \ 'html',
     \ 'swift' ] }
 
-" =======================================
+" =================================================
+" ALE (async linter)
+" =================================================
+Plug 'w0rp/ale'
+
+let g:ale_sign_offset = 1000
+
+let g:ale_linters = {
+\ 'ruby': ['rubocop'],
+\ 'javascript': ['eslint'],
+\ 'javascript.jsx': ['eslint'],
+\ 'typescript': ['eslint'],
+\ 'typescript.tsx': ['eslint'],
+\}
+
+let g:ale_fixers = {
+\ 'ruby': ['rubocop'],
+\}
+
+let g:ale_sign_error = "🚫"
+let g:ale_sign_warning = "⚠️ "
+
+let g:ale_lint_on_text_changed = "never" " only lint on file save
+
+" Run ale fixer on \p
+
+autocmd BufNewFile,BufRead *.rb map <leader>p <Plug>(ale_fix)
+
+let g:ale_open_list = 0
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 0
+
+nnoremap <silent> I :call <SID>toggle_detail()<CR>
+function! s:toggle_detail()
+  if exists('b:ale_detail') && b:ale_detail == 1
+    pclose
+    let b:ale_detail = 0
+  else
+    ALEDetail
+    let b:ale_detail = 1
+  endif
+endfunction
+
 
 call plug#end()

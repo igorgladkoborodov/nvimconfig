@@ -11,7 +11,7 @@ function ToggleColors()
     hi VertSplit ctermbg=0 guibg=#073642
     hi SignColumn ctermbg=0 guibg=#073642
 
-    hi CocFloat ctermbg=247 ctermfg=235 guibg=#93a1a1 guifg=#00232B
+    " hi Pmenu ctermfg=10 ctermbg=15 guifg=#586e75 guibg=#fdf6e3 guisp=NONE cterm=NONE gui=NONE
   elseif g:colors_variant == 1
     set background=light
     colorscheme NeoSolarized
@@ -22,8 +22,10 @@ function ToggleColors()
     hi VertSplit ctermbg=7 guibg=#eee8d5
     hi SignColumn ctermbg=7 guibg=#eee8d5
 
-    hi CocFloat ctermbg=247 ctermfg=235 guibg=#93a1a1 guifg=#00232B
+    " hi Pmenu ctermfg=14 ctermbg=8 guifg=#fdf6e3 guibg=#00232B guisp=NONE cterm=NONE gui=NONE
   endif
+
+  hi Pmenu cterm=NONE gui=NONE
 
   hi! link EndOfBuffer NonText
   hi clear MatchTag
@@ -35,7 +37,7 @@ function ToggleColors()
   hi! link CocInfoSign AleErrorSign
   hi! link CocHintSign AleErrorSign
 
-  hi CocUnderline gui=undercurl term=undercurl
+  hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
   hi default link CocErrorHighlight   CocUnderline
   hi default link CocWarningHighlight CocUnderline
   hi default link CocInfoHighlight    CocUnderline

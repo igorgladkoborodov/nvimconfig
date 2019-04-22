@@ -11,8 +11,14 @@
       "rootPatterns": [".flowconfig"]
     }
   },
+
+  "solargraph.commandPath": "/Users/igor/.rbenv/versions/2.4.1/bin/solargraph",
+
   "diagnostic.errorSign": "🚫",
   "diagnostic.warningSign": "⚠️",
   "diagnostic.infoSign": "ℹ️",
+
   "coc.preferences.currentFunctionSymbolAutoUpdate": true
+
+
 }
