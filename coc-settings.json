@@ -1,24 +1,37 @@
 {
-  "tsserver.enableJavascript": false,
+  "tsserver.enableJavascript": true,
+
   "languageserver": {
     "flow": {
       "command": "flow",
       "args": ["lsp"],
       "filetypes": ["javascript", "javascriptreact"],
       "initializationOptions": {},
-      "requireRootPattern": true,
       "settings": {},
+      "requireRootPattern": true,
+      "ignoredRootPaths": ["~"],
       "rootPatterns": [".flowconfig"]
     }
   },
 
+  "eslint.filetypes": [
+    "javascript",
+    "typescript",
+    "javascript.jsx",
+    "typescript.tsx",
+    "javascriptreact",
+    "typescriptreact"
+  ],
+
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true,
   "solargraph.commandPath": "/Users/igor/.rbenv/versions/2.4.1/bin/solargraph",
+
+  "prettier.formatterPriority": -1,
 
   "diagnostic.errorSign": "🚫",
   "diagnostic.warningSign": "⚠️",
   "diagnostic.infoSign": "ℹ️",
 
   "coc.preferences.currentFunctionSymbolAutoUpdate": true
-
-
 }

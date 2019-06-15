@@ -1,7 +1,7 @@
 if exists('g:vv')
   VVset nobold
   VVset noitalic
-  VVset fontfamily=SFMono-Light
+  VVset fontfamily=SFMono-Regular
   VVset fontsize=12
   VVset lineheight=1.25
   VVset letterspacing=-1

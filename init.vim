@@ -115,6 +115,7 @@ vmap u <Nop>
 
 " Make gf work for node custom root
 set path+=$PWD/**3
+set suffixesadd+=.js,.jsx,.ts,.tsx
 
 " `y moves last saved register to yank register 0
 map `y :let @0=@"<CR>
@@ -208,14 +209,13 @@ Plug 'nathanaelkane/vim-indent-guides'
 
 " ===========================================================
 " Leader f for search and The Silver Searcher
-" https://github.com/mileszs/ack.vim
-" https://robots.thoughtbot.com/faster-grepping-in-vim
 " ===========================================================
 Plug 'mileszs/ack.vim'
-if executable('ag')
-  let g:ackprg = 'ag --nogroup --nocolor --column'
+
+if executable('rg')
+  let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
 endif
-" command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
+
 nnoremap <Leader>f :Ack!<Space>
 
 
@@ -258,7 +258,7 @@ Plug 'leafgarland/typescript-vim'
 let g:typescript_indent_disable = 0
 
 Plug 'ianks/vim-tsx'
-"
+
 " autocmd BufNewFile,BufRead *.ts set filetype=typescript
 " autocmd BufNewFile,BufRead *.tsx set filetype=typescript.tsx
 " autocmd BufNewFile,BufRead *.ts set syntax=typescript
@@ -402,12 +402,6 @@ let g:jsdoc_input_description=1
 " COC
 " ===================================================================
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 
 set signcolumn=yes
 
@@ -446,71 +440,18 @@ let g:coc_status_error_sign = "🚫"
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
 nmap <silent> ]c <Plug>(coc-diagnostic-next)
+map <Leader>c <Plug>(coc-diagnostic-info)
 
-" =================
-" Prettier
-" =================
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'yarn install',
-  \ 'branch': 'release/1.x',
-  \ 'for': [
-    \ 'javascript',
-    \ 'typescript',
-    \ 'css',
-    \ 'less',
-    \ 'scss',
-    \ 'json',
-    \ 'graphql',
-    \ 'markdown',
-    \ 'vue',
-    \ 'lua',
-    \ 'php',
-    \ 'python',
-    \ 'html',
-    \ 'swift' ] }
+map <silent> <leader>p :call <SID>format()<CR>
 
-" =================================================
-" ALE (async linter)
-" =================================================
-Plug 'w0rp/ale'
-
-let g:ale_sign_offset = 1000
-
-let g:ale_linters = {
-\ 'ruby': ['rubocop'],
-\ 'javascript': ['eslint'],
-\ 'javascript.jsx': ['eslint'],
-\ 'typescript': ['eslint'],
-\ 'typescript.tsx': ['eslint'],
-\}
-
-let g:ale_fixers = {
-\ 'ruby': ['rubocop'],
-\}
-
-let g:ale_sign_error = "🚫"
-let g:ale_sign_warning = "⚠️ "
-
-let g:ale_lint_on_text_changed = "never" " only lint on file save
-
-" Run ale fixer on \p
-
-autocmd BufNewFile,BufRead *.rb map <leader>p <Plug>(ale_fix)
-
-let g:ale_open_list = 0
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 0
-
-nnoremap <silent> I :call <SID>toggle_detail()<CR>
-function! s:toggle_detail()
-  if exists('b:ale_detail') && b:ale_detail == 1
-    pclose
-    let b:ale_detail = 0
+function! s:format()
+  if index(['javasript', 'typescript', 'typescript.tsx', 'javascript.jsx', 'typescriptreact', 'javascriptreact', 'graphql', 'json'], &filetype) != -1
+    call CocAction('runCommand', 'prettier.formatFile')
   else
-    ALEDetail
-    let b:ale_detail = 1
+    call CocAction('format')
   endif
 endfunction
 
+" ===================================================================
 
 call plug#end()
