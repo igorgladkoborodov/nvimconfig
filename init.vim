@@ -32,6 +32,13 @@ set smartcase                   " ... unless they contain at least one capital l
 
 set wrap                        " Wrap by default
 
+" Scroll
+set scrolloff=10
+
+" `= and `- to change window size
+map `= :vertical resize +20<CR>
+map `- :vertical resize -20<CR>
+
 " Ignore these from search etc
 set wildignore+=*/tmp,*/node_modules,.DS_Store,*/.bundle
 
@@ -56,6 +63,8 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+" set cursorline
 
 
 " ============================
@@ -99,7 +108,7 @@ silent! call repeat#set("\<Plug>MyWonderfulMap", v:count)
 set guioptions=
 
 " Limit syntax for long lines to increase speed
-set synmaxcol=400
+set synmaxcol=4000
 
 " Enable mouse in terminal
 " set mouse=a
@@ -161,10 +170,11 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Show git files only (respect .gitignore)
-map <Leader>t :GFiles<CR>
+map ; :GFiles<CR>
 " FZF all files
-map <Leader>r :Files<CR>
-
+map <Leader>t :Files<CR>
+" Leader b for buffers
+map <Leader>b :Buffers<CR>
 
 " ==================================================
 " NERD tree
@@ -176,7 +186,12 @@ map <Leader>z :NERDTreeFind<CR>
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeNoSwitchTabs=1
-let g:NERDTreeHighlightCursorline=0
+" let g:NERDTreeHighlightCursorline=0
+
+autocmd FileType nerdtree setlocal signcolumn=no
+
+let g:NERDTreeDirArrowExpandable = ' '
+let g:NERDTreeDirArrowCollapsible = ' '
 
 " autocmd VimEnter * NERDTree
 
@@ -224,8 +239,8 @@ nnoremap <Leader>f :Ack!<Space>
 " ======================================================
 Plug 'sjbach/lusty'
 map <Leader>s :LustyJuggler<CR>
-map <Leader>b :LustyBufferExplorer<CR>
-map <Leader>d :LustyFilesystemExplorerFromHere<CR>
+" map <Leader>b :LustyBufferExplorer<CR>
+" map <Leader>d :LustyFilesystemExplorerFromHere<CR>
 
 
 " ====================================================================
@@ -264,11 +279,12 @@ Plug 'ianks/vim-tsx'
 " autocmd BufNewFile,BufRead *.ts set syntax=typescript
 " autocmd BufNewFile,BufRead *.tsx set syntax=typescript.tsx
 
+Plug 'jparise/vim-graphql'
+
 " ====================================================================
 " Color Scheme
 " ====================================================================
 Plug 'iCyMind/NeoSolarized'
-
 
 " ================================================
 " Lightline

@@ -1,3 +1,3 @@
 ```
-ln -s ~/.config/nvim/coc ~/.config/coc
+ln -s ~/.config/nvim/coc ~/.config
 ```
