@@ -64,7 +64,7 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-" set cursorline
+set cursorline
 
 
 " ============================
@@ -91,7 +91,7 @@ set scrolloff=5
 set list
 set listchars=eol:¬,tab:→\ ,nbsp:_,precedes:(,extends:),trail:·
 
-set number
+set nonumber
 
 " Indent on < or >
 vnoremap < <gv
@@ -140,7 +140,7 @@ nnoremap # #``
 map `/ :noh<CR>
 
 " hide | on window split (space after \ is important)
-set fillchars+=vert:\ 
+" set fillchars+=vert:\ 
 
 " Folding
 nnoremap <Space> za
@@ -419,7 +419,9 @@ let g:jsdoc_input_description=1
 " ===================================================================
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
-set signcolumn=yes
+let g:coc_node_path = $HOME."/.nvm/versions/node/v10.15.3/bin/node"
+
+set signcolumn=no
 
 nmap <silent> gd <Plug>(coc-definition)
 
