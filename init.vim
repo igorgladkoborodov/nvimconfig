@@ -5,7 +5,7 @@ let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
 let g:ruby_host_prog = '~/.rbenv/versions/2.4.1/bin/neovim-ruby-host'
 
-language en_US                " sets the language of the messages / ui (vim)
+language en_US.utf-8          " sets the language of the messages / ui (vim)
 " set ruler                   " Info in the bottom right
 syntax enable
 
@@ -78,6 +78,8 @@ map <Leader><Leader> :tabe %<CR>
 
 map <D-S-}> :tabn<CR>
 map <D-S-{> :tabp<CR>
+map <D-S-]> :tabn<CR>
+map <D-S-[> :tabp<CR>
 
 " Shit+Cmd+Ctrl+] to move tab left
 " Shit+Cmd+Ctrl+[ to move tab right
@@ -92,6 +94,7 @@ set list
 set listchars=eol:¬,tab:→\ ,nbsp:_,precedes:(,extends:),trail:·
 
 set nonumber
+map <D-l> :set number!<CR>
 
 " Indent on < or >
 vnoremap < <gv
@@ -190,8 +193,8 @@ let g:NERDTreeNoSwitchTabs=1
 
 autocmd FileType nerdtree setlocal signcolumn=no
 
-let g:NERDTreeDirArrowExpandable = ' '
-let g:NERDTreeDirArrowCollapsible = ' '
+" let g:NERDTreeDirArrowExpandable = ' '
+" let g:NERDTreeDirArrowCollapsible = ' '
 
 " autocmd VimEnter * NERDTree
 
@@ -297,7 +300,7 @@ let g:lightline = {
 \ 'colorscheme': 'solarized',
 \ 'active': {
 \   'left': [ [ 'paste' ], ['relativepath'] ],
-\   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus', 'linter_warnings', 'linter_errors' ] ]
+\   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus' ] ]
 \ },
 \ 'inactive': {
 \   'left': [ ['relativepath'] ],
@@ -313,14 +316,10 @@ let g:lightline = {
 \   'pwd': systemlist('dirs')[0],
 \ },
 \ 'component_expand': {
-\   'linter_warnings': 'LightlineLinterWarnings',
-\   'linter_errors': 'LightlineLinterErrors',
-\   'time': 'LightlineTime'
+\   'time': 'LightlineTime',
 \ },
 \ 'component_type': {
 \   'readonly': 'warning',
-\   'linter_warnings': 'custom',
-\   'linter_errors': 'custom'
 \ },
 \ 'component_function': {
 \   'cocstatus': 'CocStatus'
@@ -346,32 +345,11 @@ endfunction
 
 function! CocStatus() abort
   let info = get(b:, 'coc_diagnostic_info', {})
-  if empty(info) | return '' | endif
-  let msgs = []
-  if get(info, 'error', 0)
-    call add(msgs, get(g:, 'coc_status_error_sign') . info['error'])
+  let status = substitute(get(g:, 'coc_status', ''), '\s*Prettier\s*', '', '')
+  if get(info, 'error', 0) || get(info, 'warning', 0)
+    let status = status . ' ⚠️ ' . (get(info, 'error', 0) + get(info, 'warning', 0))
   endif
-  if get(info, 'warning', 0)
-    call add(msgs, get(g:, 'coc_status_warning_sign') . info['warning'])
-  endif
-  return join(msgs, ' ')
-endfunction
-
-
-function! LightlineLinterWarnings() abort
-  let l:problems = ale#engine#GetLoclist(bufnr(''))
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:all_non_errors == 0 ? '' : printf('⚠️ %d:L%d', all_non_errors, problems[0].lnum)
-endfunction
-
-function! LightlineLinterErrors() abort
-  let l:problems = ale#engine#GetLoclist(bufnr(''))
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:all_errors == 0 ? '' : printf('🚫%d:L%d', all_errors, problems[0].lnum)
+  return status
 endfunction
 
 " =================================================
@@ -418,12 +396,16 @@ let g:jsdoc_input_description=1
 " COC
 " ===================================================================
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'honza/vim-snippets'
 
 let g:coc_node_path = $HOME."/.nvm/versions/node/v10.15.3/bin/node"
 
 set signcolumn=no
 
-nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gd :call CocActionAsync('jumpDefinition')<CR>
+nmap <silent> gy :call CocActionAsync('jumpTypeDefinition')<CR>
+nmap <silent> gi :call CocActionAsync('jumpImplementation')<CR>
+nmap <silent> gr :call CocActionAsync('jumpReferences')<CR>
 
 " Use K to show documentation in preview window
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -432,7 +414,7 @@ function! s:show_documentation()
   if &filetype == 'vim'
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    call CocActionAsync('doHover')
   endif
 endfunction
 
@@ -451,7 +433,8 @@ endfunction
 
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
 " Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 let g:coc_status_error_sign = "🚫"
 
@@ -464,9 +447,9 @@ map <silent> <leader>p :call <SID>format()<CR>
 
 function! s:format()
   if index(['javasript', 'typescript', 'typescript.tsx', 'javascript.jsx', 'typescriptreact', 'javascriptreact', 'graphql', 'json'], &filetype) != -1
-    call CocAction('runCommand', 'prettier.formatFile')
+    call CocActionAsync('runCommand', 'prettier.formatFile')
   else
-    call CocAction('format')
+    call CocActionAsync('format')
   endif
 endfunction
 

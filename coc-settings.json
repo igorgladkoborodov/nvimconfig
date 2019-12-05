@@ -1,18 +1,9 @@
 {
   "tsserver.enableJavascript": true,
+  "tsserver.disableAutomaticTypeAcquisition": true,
+  "-disable-tsserver.trace.server": "verbose",
 
-  "languageserver": {
-    "flow": {
-      "command": "flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "initializationOptions": {},
-      "settings": {},
-      "requireRootPattern": true,
-      "ignoredRootPaths": ["~"],
-      "rootPatterns": [".flowconfig"]
-    }
-  },
+  "javascript.validate.enable": false,
 
   "eslint.filetypes": [
     "javascript",
@@ -33,5 +24,17 @@
   "diagnostic.warningSign": "⚠️",
   "diagnostic.infoSign": "ℹ️",
 
-  "coc.preferences.currentFunctionSymbolAutoUpdate": true
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+
+  "diagnostic.messageTarget": "echo",
+  "diagnostic.refreshAfterSave": true,
+
+  "snippets.extends": {
+    "javascript.jsx": ["javascript"],
+    "javascriptreact": ["javascript"],
+    "typescriptreact": ["javascript"],
+    "typescript.jsx": ["javascript"],
+    "typescript.tsx": ["javascript"],
+    "typescript": ["javascript"]
+  }
 }
