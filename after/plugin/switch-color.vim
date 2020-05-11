@@ -1,61 +1,63 @@
 function ToggleColors()
-  let g:colors_variant = exists('g:colors_variant') ? (g:colors_variant + 1)%2 : 0
+  let g:colors_variant = exists('g:colors_variant') ? (g:colors_variant + 1)%3 : 0
   if g:colors_variant == 0
+    colorscheme nord
+    let g:lightline.colorscheme = 'nord'
+    hi! CocUnderline gui=undercurl term=undercurl guisp=#BF616A
+  elseif g:colors_variant == 1
     set background=dark
     colorscheme NeoSolarized
-    " hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#ff2600 guibg=#073642  gui=NONE
     hi CursorLine ctermfg=NONE ctermbg=236 guifg=NONE guibg=#002E38 guisp=#93a1a1 cterm=NONE gui=NONE
     hi illuminatedWord ctermfg=NONE ctermbg=236 guifg=NONE guibg=#003e4d guisp=#93a1a1 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=160 guifg=#fdf6e3 guibg=#dc322f guisp=NONE cterm=NONE gui=NONE
     hi Normal ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg=#00232B guisp=NONE cterm=NONE gui=NONE
-    " hi VertSplit ctermbg=0 guibg=#073642
-    " hi SignColumn ctermbg=0 guibg=#073642
 
-    " hi Pmenu ctermfg=10 ctermbg=15 guifg=#586e75 guibg=#fdf6e3 guisp=NONE cterm=NONE gui=NONE
-  elseif g:colors_variant == 1
+    hi Pmenu cterm=NONE gui=NONE
+
+    hi! link EndOfBuffer NonText
+    hi clear MatchTag
+
+    hi! link CocFloating Pmenu
+    hi! link CocErrorFloat CocFloating
+    hi! link CocWarningFloat CocFloating
+    hi! link CocInfoFloat CocFloating
+    hi! link CocHintFloat CocFloating
+
+    hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
+
+    let g:lightline.colorscheme = 'solarized'
+    runtime autoload/lightline/colorscheme/solarized.vim
+  elseif g:colors_variant == 2
     set background=light
     colorscheme NeoSolarized
-    " hi ALEErrorSign ctermfg=10  ctermbg=0  guifg=#c34915  guibg=#eee8d5  gui=NONE
     hi CursorLine ctermfg=NONE ctermbg=254 guifg=NONE guibg=#F7F1DF guisp=#586e75 cterm=NONE gui=NONE
     hi illuminatedWord ctermfg=NONE ctermbg=254 guifg=NONE guibg=#f5edd6 guisp=#586e75 cterm=NONE gui=NONE
     hi MatchParen ctermfg=230 ctermbg=32 guifg=#fdf6e3 guibg=#268bd2 guisp=NONE cterm=NONE gui=NONE
-    " hi VertSplit ctermbg=7 guibg=#eee8d5
-    " hi SignColumn ctermbg=7 guibg=#eee8d5
 
-    " hi Pmenu ctermfg=14 ctermbg=8 guifg=#fdf6e3 guibg=#00232B guisp=NONE cterm=NONE gui=NONE
+    hi Pmenu cterm=NONE gui=NONE
+
+    hi! link EndOfBuffer NonText
+    hi clear MatchTag
+
+    hi! link CocFloating Pmenu
+    hi! link CocErrorFloat CocFloating
+    hi! link CocWarningFloat CocFloating
+    hi! link CocInfoFloat CocFloating
+    hi! link CocHintFloat CocFloating
+
+    hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
+
+    let g:lightline.colorscheme = 'solarized'
+    runtime autoload/lightline/colorscheme/solarized.vim
   endif
 
-  hi Pmenu cterm=NONE gui=NONE
-
-  hi! link EndOfBuffer NonText
-  hi clear MatchTag
-
-  " hi! link ALEWarningSign AleErrorSign
-  "
-  " hi! link CocErrorSign AleErrorSign
-  " hi! link CocWarningSign AleErrorSign
-  " hi! link CocInfoSign AleErrorSign
-  " hi! link CocHintSign AleErrorSign
-
-  hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
   hi default link CocErrorHighlight   CocUnderline
   hi default link CocWarningHighlight CocUnderline
   hi default link CocInfoHighlight    CocUnderline
   hi default link CocHintHighlight    CocUnderline
 
-  hi! link CocFloating Pmenu
-  hi! link CocErrorFloat CocFloating
-  hi! link CocWarningFloat CocFloating
-  hi! link CocInfoFloat CocFloating
-  hi! link CocHintFloat CocFloating
-
-  " hi default CocSelectedText ctermfg=Red     guifg=#fb4934
-  " hi default CocCodeLens     ctermfg=Gray    guifg=#999999
-  " hi default link CocListMode ModeMsg
-  " hi default link CocListPath Comment
-
   " Make lightline switch light/dark background
-  runtime autoload/lightline/colorscheme/solarized.vim
+  " runtime autoload/lightline/colorscheme/solarized.vim
   call lightline#init()
   call lightline#colorscheme()
   call lightline#update()
@@ -93,12 +95,12 @@ let g:neosolarized_bold = 0
 let g:neosolarized_underline = 0
 let g:neosolarized_italic = 0
 
-call ToggleSpellTo(1)
+" call ToggleSpellTo(1)
 
 if exists('g:vv')
-  call ToggleColorsTo(1)
-else
   call ToggleColorsTo(0)
+else
+  call ToggleColorsTo(1)
 end
 
 map <F6> :call ToggleColors()<CR>

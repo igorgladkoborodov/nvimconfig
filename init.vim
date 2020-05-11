@@ -1,9 +1,9 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-let g:python2_host_prog = '/usr/local/bin/python'
-let g:python3_host_prog = '/usr/local/bin/python3'
-let g:ruby_host_prog = '~/.rbenv/versions/2.4.1/bin/neovim-ruby-host'
+" let g:python2_host_prog = '/usr/local/bin/python'
+" let g:python3_host_prog = '/usr/local/bin/python3'
+" let g:ruby_host_prog = '~/.rbenv/versions/2.4.1/bin/neovim-ruby-host'
 
 language en_US.utf-8          " sets the language of the messages / ui (vim)
 " set ruler                   " Info in the bottom right
@@ -191,7 +191,7 @@ let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeNoSwitchTabs=1
 " let g:NERDTreeHighlightCursorline=0
 
-autocmd FileType nerdtree setlocal signcolumn=no
+autocmd FileType nerdtree setlocal signcolumn=auto
 
 " let g:NERDTreeDirArrowExpandable = ' '
 " let g:NERDTreeDirArrowCollapsible = ' '
@@ -288,22 +288,22 @@ Plug 'jparise/vim-graphql'
 " Color Scheme
 " ====================================================================
 Plug 'iCyMind/NeoSolarized'
+Plug 'arcticicestudio/nord-vim'
 
 " ================================================
 " Lightline
 " ================================================
 Plug 'itchyny/lightline.vim'
 
-set background=dark
 
 let g:lightline = {
-\ 'colorscheme': 'solarized',
+\ 'colorscheme': 'nord',
 \ 'active': {
-\   'left': [ [ 'paste' ], ['relativepath'] ],
+\   'left': [ ['paste', 'relativepath'] ],
 \   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus' ] ]
 \ },
 \ 'inactive': {
-\   'left': [ ['relativepath'] ],
+\   'left': [ [], ['relativepath'] ],
 \   'right': [ ]
 \ },
 \ 'tabline': {
@@ -398,9 +398,9 @@ let g:jsdoc_input_description=1
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'honza/vim-snippets'
 
-let g:coc_node_path = $HOME."/.nvm/versions/node/v10.15.3/bin/node"
+" let g:coc_node_path = $HOME."/.nvm/versions/node/v10.15.3/bin/node"
 
-set signcolumn=no
+set signcolumn=auto
 
 nmap <silent> gd :call CocActionAsync('jumpDefinition')<CR>
 nmap <silent> gy :call CocActionAsync('jumpTypeDefinition')<CR>
@@ -436,7 +436,8 @@ endfunction
 " inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-let g:coc_status_error_sign = "🚫"
+" let g:coc_status_error_sign = "🚫"
+" let g:coc_status_error_sign = "🚫"
 
 " Use `[c` and `]c` to navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -446,7 +447,7 @@ map <Leader>c <Plug>(coc-diagnostic-info)
 map <silent> <leader>p :call <SID>format()<CR>
 
 function! s:format()
-  if index(['javasript', 'typescript', 'typescript.tsx', 'javascript.jsx', 'typescriptreact', 'javascriptreact', 'graphql', 'json'], &filetype) != -1
+  if index(['javascript', 'typescript', 'typescript.tsx', 'javascript.jsx', 'typescriptreact', 'javascriptreact', 'graphql', 'json'], &filetype) != -1
     call CocActionAsync('runCommand', 'prettier.formatFile')
   else
     call CocActionAsync('format')
@@ -456,3 +457,12 @@ endfunction
 " ===================================================================
 
 call plug#end()
+
+let g:nord_cursor_line_number_background = 1
+let g:nord_uniform_status_lines = 0
+let g:nord_underline_comments = 0
+let g:nord_underline = 0
+let g:nord_italic = 0
+let g:nord_bold = 0
+
+colorscheme nord

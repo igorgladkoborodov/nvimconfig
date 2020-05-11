@@ -16,13 +16,15 @@
 
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
-  "solargraph.commandPath": "/Users/igor/.rbenv/versions/2.4.1/bin/solargraph",
+  //"solargraph.commandPath": "~/.rbenv/shims/solargraph",
+  "solargraph.hover": true,
 
   "prettier.formatterPriority": -1,
 
   "diagnostic.errorSign": "🚫",
   "diagnostic.warningSign": "⚠️",
   "diagnostic.infoSign": "ℹ️",
+  "diagnostic.enableSign": false,
 
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
 
