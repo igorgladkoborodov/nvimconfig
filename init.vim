@@ -64,7 +64,7 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
-set cursorline
+set nocursorline
 
 
 " ============================
@@ -293,57 +293,57 @@ Plug 'arcticicestudio/nord-vim'
 " ================================================
 " Lightline
 " ================================================
-Plug 'itchyny/lightline.vim'
+" Plug 'itchyny/lightline.vim'
 
 
-let g:lightline = {
-\ 'colorscheme': 'nord',
-\ 'active': {
-\   'left': [ ['paste', 'relativepath'] ],
-\   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus' ] ]
-\ },
-\ 'inactive': {
-\   'left': [ [], ['relativepath'] ],
-\   'right': [ ]
-\ },
-\ 'tabline': {
-\   'left': [ [ 'tabs' ] ],
-\   'right': [ [ 'time' ] ]
-\ },
-\ 'component': {
-\   'lineinfo': '%2l/%L %2v',
-\   'relativepath': '%f%{&modified?" +":""}',
-\   'pwd': systemlist('dirs')[0],
-\ },
-\ 'component_expand': {
-\   'time': 'LightlineTime',
-\ },
-\ 'component_type': {
-\   'readonly': 'warning',
-\ },
-\ 'component_function': {
-\   'cocstatus': 'CocStatus'
-\ },
-\ 'mode_map': {
-\   'n' : '',
-\   'i' : '',
-\   'R' : 'REPLACE',
-\   'v' : '',
-\   'V' : '',
-\   "\<C-v>": '',
-\   'c' : '',
-\   's' : 'SELECT',
-\   'S' : 'S-LINE',
-\   "\<C-s>": 'S-BLOCK',
-\   't': 'TERMINAL',
-\ }
-\ }
-
-function! LightlineTime() abort
-  return strftime('%I:%M')
-endfunction
-
-function! CocStatus() abort
+" let g:lightline = {
+" \ 'colorscheme': 'nord',
+" \ 'active': {
+" \   'left': [ ['paste', 'relativepath'] ],
+" \   'right': [ [ 'lineinfo' ], ['readonly', 'cocstatus' ] ]
+" \ },
+" \ 'inactive': {
+" \   'left': [ [], ['relativepath'] ],
+" \   'right': [ ]
+" \ },
+" \ 'tabline': {
+" \   'left': [ [ 'tabs' ] ],
+" \   'right': [ [ 'time' ] ]
+" \ },
+" \ 'component': {
+" \   'lineinfo': '%2l/%L %2v',
+" \   'relativepath': '%f%{&modified?" +":""}',
+" \   'pwd': systemlist('dirs')[0],
+" \ },
+" \ 'component_expand': {
+" \   'time': 'LightlineTime',
+" \ },
+" \ 'component_type': {
+" \   'readonly': 'warning',
+" \ },
+" \ 'component_function': {
+" \   'cocstatus': 'CocStatus'
+" \ },
+" \ 'mode_map': {
+" \   'n' : '',
+" \   'i' : '',
+" \   'R' : 'REPLACE',
+" \   'v' : '',
+" \   'V' : '',
+" \   "\<C-v>": '',
+" \   'c' : '',
+" \   's' : 'SELECT',
+" \   'S' : 'S-LINE',
+" \   "\<C-s>": 'S-BLOCK',
+" \   't': 'TERMINAL',
+" \ }
+" \ }
+"
+" function! LightlineTime() abort
+"   return strftime('%I:%M')
+" endfunction
+"
+function! CocStatus()
   let info = get(b:, 'coc_diagnostic_info', {})
   let status = substitute(get(g:, 'coc_status', ''), '\s*Prettier\s*', '', '')
   if get(info, 'error', 0) || get(info, 'warning', 0)
@@ -459,10 +459,55 @@ endfunction
 call plug#end()
 
 let g:nord_cursor_line_number_background = 1
-let g:nord_uniform_status_lines = 0
+let g:nord_uniform_status_lines = 1
 let g:nord_underline_comments = 0
 let g:nord_underline = 0
 let g:nord_italic = 0
 let g:nord_bold = 0
 
 colorscheme nord
+
+" set fillchars=stl:-,stlnc:-,vert:║
+set fillchars=stl:\ ,stlnc:\ ,vert:┃
+" set fillchars=stl:\ ,stlnc:\ ,vert:║
+" set fillchars=stl:\ ,stlnc:\ ,vert:\ 
+" set fillchars=vert:║
+
+" set statusline=---%#StatusLineText#\ %f\ %M\ %0*%=%{CocStatus()}\ %p%%/%L\ %l:%c\ 
+set statusline=\ %f%q\ %M\ %=%{CocStatus()}\ %L×%p%%\ %l:%c\ \ 
+
+function MyTabLabel(n)
+  let buflist = tabpagebuflist(a:n)
+  let winnr = tabpagewinnr(a:n)
+  return bufname(buflist[winnr - 1])
+endfunction
+
+function MyTabLine()
+  let s = ''
+  for i in range(tabpagenr('$'))
+    " select the highlighting
+    if i + 1 == tabpagenr()
+      let s .= '%#TabLineSel#'
+    else
+      let s .= '%#TabLine#'
+    endif
+
+    " set the tab page number (for mouse clicks)
+    let s .= '%' . (i + 1) . 'T'
+
+    " the label is made by MyTabLabel()
+    let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+  endfor
+
+  " after the last tab fill with TabLineFill and reset tab page nr
+  let s .= '%#TabLineFill#%T'
+
+  " right-align the label to close the current tab page
+  if tabpagenr('$') > 1
+    let s .= '%=%#TabLine#%999Xclose'
+  endif
+
+  return s
+endfunction
+
+set tabline=%!MyTabLine()

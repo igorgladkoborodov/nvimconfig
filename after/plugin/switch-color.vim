@@ -2,8 +2,21 @@ function ToggleColors()
   let g:colors_variant = exists('g:colors_variant') ? (g:colors_variant + 1)%3 : 0
   if g:colors_variant == 0
     colorscheme nord
-    let g:lightline.colorscheme = 'nord'
+    " let g:lightline.colorscheme = 'nord'
     hi! CocUnderline gui=undercurl term=undercurl guisp=#BF616A
+    " hi StatusLine guibg=#2E3440 guifg=#ECEFF4
+    " hi StatusLineNC guibg=#2E3440 guifg=#ECEFF4
+
+    " hi StatusLine guifg=#2E3440 guibg=#ECEFF4
+    " hi StatusLineNC guifg=#2E3440 guibg=#ECEFF4
+
+    " hi VertSplit guifg=#D8DEE9 guibg=#2E3440
+    " hi StatusLine guibg=#2E3440 guifg=#D8DEE9
+    " hi StatusLineNC guibg=#2E3440 guifg=#D8DEE9
+
+    " hi StatusLineText guibg=#2E3440 guifg=#D8DEE9
+    " hi StatusLineText guibg=#ECEFF4 guifg=#2E3440
+
   elseif g:colors_variant == 1
     set background=dark
     colorscheme NeoSolarized
@@ -25,8 +38,8 @@ function ToggleColors()
 
     hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
 
-    let g:lightline.colorscheme = 'solarized'
-    runtime autoload/lightline/colorscheme/solarized.vim
+    " let g:lightline.colorscheme = 'solarized'
+    " runtime autoload/lightline/colorscheme/solarized.vim
   elseif g:colors_variant == 2
     set background=light
     colorscheme NeoSolarized
@@ -47,8 +60,8 @@ function ToggleColors()
 
     hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
 
-    let g:lightline.colorscheme = 'solarized'
-    runtime autoload/lightline/colorscheme/solarized.vim
+    " let g:lightline.colorscheme = 'solarized'
+    " runtime autoload/lightline/colorscheme/solarized.vim
   endif
 
   hi default link CocErrorHighlight   CocUnderline
@@ -58,9 +71,9 @@ function ToggleColors()
 
   " Make lightline switch light/dark background
   " runtime autoload/lightline/colorscheme/solarized.vim
-  call lightline#init()
-  call lightline#colorscheme()
-  call lightline#update()
+  " call lightline#init()
+  " call lightline#colorscheme()
+  " call lightline#update()
 endfunction
 
 function ToggleColorsTo(colors_variant)
