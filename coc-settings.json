@@ -1,7 +1,7 @@
 {
   "tsserver.enableJavascript": true,
   "tsserver.disableAutomaticTypeAcquisition": true,
-  "-disable-tsserver.trace.server": "verbose",
+  //"tsserver.trace.server": "verbose",
 
   "javascript.validate.enable": false,
 
@@ -16,10 +16,10 @@
 
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
-  //"solargraph.commandPath": "~/.rbenv/shims/solargraph",
+  //"solargraph.commandPath": "~/.rbenv/versions/2.6.6/bin/solargraph",
   "solargraph.hover": true,
 
-  "prettier.formatterPriority": -1,
+  "prettier.formatterPriority": 1,
 
   "diagnostic.errorSign": "🚫",
   "diagnostic.warningSign": "⚠️",
@@ -31,12 +31,16 @@
   "diagnostic.messageTarget": "echo",
   "diagnostic.refreshAfterSave": true,
 
-  "snippets.extends": {
-    "javascript.jsx": ["javascript"],
-    "javascriptreact": ["javascript"],
-    "typescriptreact": ["javascript"],
-    "typescript.jsx": ["javascript"],
-    "typescript.tsx": ["javascript"],
-    "typescript": ["javascript"]
-  }
+  "disable--coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "javascript.jsx",
+    "typescript.tsx",
+    "javascriptreact",
+    "typescriptreact",
+    "json",
+    "graphql",
+    "yaml",
+    "md"
+  ]
 }
