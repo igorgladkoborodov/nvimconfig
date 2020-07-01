@@ -31,6 +31,8 @@
   "diagnostic.messageTarget": "echo",
   "diagnostic.refreshAfterSave": true,
 
+  //"coc.preferences.enableFloatHighlight": false,
+
   "disable--coc.preferences.formatOnSaveFiletypes": [
     "javascript",
     "typescript",

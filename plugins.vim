@@ -25,7 +25,7 @@ map <Leader>a :NERDTreeToggle<CR>
 map <Leader>z :NERDTreeFind<CR>
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeQuitOnOpen=1
-let g:NERDTreeNoSwitchTabs=1
+let g:NERDTreeCustomOpenArgs = {'file': {'where': 'p'}, 'dir': {}}
 
 autocmd FileType nerdtree setlocal signcolumn=auto
 
@@ -76,6 +76,7 @@ Plug 'jparise/vim-graphql'
 " Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 
 " ====================================================================
 " Color Scheme

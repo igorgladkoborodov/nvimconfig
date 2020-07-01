@@ -3,7 +3,7 @@
 " ==========================================
 function! CocStatus()
   let info = get(b:, 'coc_diagnostic_info', {})
-  let status = substitute(get(g:, 'coc_status', ''), '\s*Prettier\s*', '', '')
+  let status = substitute(get(g:, 'coc_status', ''), 'Prettier', '', '')
   if get(info, 'error', 0) || get(info, 'warning', 0)
     let status = status . ' ⚠️ ' . (get(info, 'error', 0) + get(info, 'warning', 0))
   endif

@@ -40,13 +40,6 @@ set nonumber                    " Hide line numbers
 
 set guioptions=                 " Remove scrollbars (legacy)
 
-" Trying to make vim faster
-" https://vi.stackexchange.com/questions/10495/most-annoying-slow-down-of-a-plain-text-editor
-set regexpengine=1
-set ttyfast
-set lazyredraw
-set synmaxcol=4000              " Limit syntax for long lines
-
 set path+=$PWD/**3              " Make gf work for node custom root
 set suffixesadd+=.js,.jsx,.ts,.tsx " Make gf work with js imports
 
@@ -63,6 +56,9 @@ let g:ruby_host_prog = '~/.rbenv/versions/2.6.6/bin/neovim-ruby-host'
 let g:node_host_prog = '~/.nvm/versions/node/v10.15.3/bin/neovim-node-host'
 let g:python2_host_prog = '/usr/local/bin/python'
 let g:python3_host_prog = '/usr/local/bin/python3'
+
+" Always start syntax from start
+autocmd BufEnter * :syntax sync fromstart
 
 " Load plugins and their settings
 source <sfile>:h/plugins.vim
