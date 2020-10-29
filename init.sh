@@ -27,3 +27,7 @@ then
   echo 'ln -s ~/.config/nvim/coc/extensions/package.json ~/.config/coc/extensions/package.json'
   ln -s ~/.config/nvim/coc/extensions/package.json ~/.config/coc/extensions/package.json
 fi
+
+# TODO: cd to .config/coc/extensions/ and do npm install
+# TODO: brew install python3 and pip3 install pynvim --user
+# TODO: brew install cpanm dnd cpanm Neovim::Ext

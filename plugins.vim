@@ -69,14 +69,12 @@ Plug 'tpope/vim-eunuch'
 " ================================================
 " Syntax
 " ================================================
-Plug 'iloginow/vim-stylus'
-" Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'jparise/vim-graphql'
-" Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'sheerun/vim-polyglot'
+
+let g:csv_no_conceal = 1
+hi! link CSVDelimiter Comment
+hi! link CSVColumnHeaderOdd Text
+hi! link CSVColumnHeaderEven Statement
 
 " ====================================================================
 " Color Scheme
@@ -120,6 +118,8 @@ Plug 'sjl/gundo.vim'
 
 nnoremap `u :GundoToggle<CR>
 nnoremap <Leader>u :GundoToggle<CR>
+
+let g:gundo_prefer_python3 = 1
 
 " ====================================================================
 " Highlight current word
@@ -168,6 +168,17 @@ nmap <silent> ]c <Plug>(coc-diagnostic-next)
 map <Leader>c <Plug>(coc-diagnostic-info)
 
 map <silent> <leader>p :call CocActionAsync('format')<CR>
+
+" autocmd FileType * let b:coc_root_patterns = ['.git']
+
+" ===================================================================
+" Open in GitHub
+" ===================================================================
+Plug 'tyru/open-browser.vim'
+Plug 'tyru/open-browser-github.vim'
+
+let g:openbrowser_github_always_use_commit_hash = 0
+" let g:openbrowser_github_always_used_branch = 1
 
 " ===================================================================
 

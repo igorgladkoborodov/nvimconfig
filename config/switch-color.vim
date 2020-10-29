@@ -1,5 +1,5 @@
 function ToggleColors()
-  let g:colors_variant = exists('g:colors_variant') ? (g:colors_variant + 1)%3 : 0
+  let g:colors_variant = exists('g:colors_variant') ? (g:colors_variant + 1)%2 : 0
   if g:colors_variant == 0
     set background=dark
     colorscheme nord
@@ -7,21 +7,6 @@ function ToggleColors()
     hi! Visual guibg=#4C566A
 
   elseif g:colors_variant == 1
-    set background=dark
-    colorscheme NeoSolarized
-
-    hi MatchParen ctermfg=230 ctermbg=160 guifg=#fdf6e3 guibg=#dc322f guisp=NONE cterm=NONE gui=NONE
-    hi! link EndOfBuffer NonText
-
-    hi Pmenu cterm=NONE gui=NONE
-    hi! link CocFloating     Pmenu
-    hi! link CocErrorFloat   CocFloating
-    hi! link CocWarningFloat CocFloating
-    hi! link CocInfoFloat    CocFloating
-    hi! link CocHintFloat    CocFloating
-
-    hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
-  elseif g:colors_variant == 2
     set background=light
     colorscheme NeoSolarized
 
@@ -71,11 +56,7 @@ endfunction
 
 " call ToggleSpellTo(1)
 
-if exists('g:vv')
-  call ToggleColorsTo(0)
-else
-  call ToggleColorsTo(1)
-end
+call ToggleColorsTo(0)
 
 map <F6> :call ToggleColors()<CR>
 map <F7> :call ToggleSpell()<CR>

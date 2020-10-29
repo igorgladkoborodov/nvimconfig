@@ -32,17 +32,4 @@
   "diagnostic.refreshAfterSave": true,
 
   //"coc.preferences.enableFloatHighlight": false,
-
-  "disable--coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "typescript",
-    "javascript.jsx",
-    "typescript.tsx",
-    "javascriptreact",
-    "typescriptreact",
-    "json",
-    "graphql",
-    "yaml",
-    "md"
-  ]
 }

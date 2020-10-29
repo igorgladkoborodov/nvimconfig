@@ -14,4 +14,5 @@ if exists('g:vv')
   " VVset nosimplefullscreen
   " VVset quitoncloselastwindow
   " VVset autoupdateinterval=1
+  VVset openInProject=1
 endif
