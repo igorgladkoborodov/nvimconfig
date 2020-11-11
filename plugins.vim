@@ -198,5 +198,15 @@ let g:openbrowser_github_always_use_commit_hash = 0
 " let g:openbrowser_github_always_used_branch = 1
 
 " ===================================================================
+" Jump between alternate files
+" ===================================================================
+Plug 'igorgladkoborodov/alter-ego.vim'
+
+map <silent> <Leader>jf :A<CR>
+map <silent> <Leader>js :A style<CR>
+map <silent> <Leader>jt :A test<CR>
+map <silent> <Leader>jn :A snapshot<CR>
+
+" ===================================================================
 
 call plug#end()

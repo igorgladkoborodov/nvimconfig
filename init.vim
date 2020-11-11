@@ -70,3 +70,6 @@ set guicursor+=i-ci-c-ve:ver25-blinkwait500-blinkoff500-blinkon500
 
 " Local config overrides
 runtime! local/**/*.vim
+
+" Always start syntax from start
+autocmd BufEnter * :syntax sync fromstart
