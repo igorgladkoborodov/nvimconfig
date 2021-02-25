@@ -3,6 +3,7 @@ function ToggleColors()
   if g:colors_variant == 0
     set background=dark
     colorscheme nord
+    hi! clear CocUnderline
     hi! CocUnderline gui=undercurl term=undercurl guisp=#BF616A
     hi! Visual guibg=#4C566A
 
@@ -20,13 +21,14 @@ function ToggleColors()
     hi! link CocInfoFloat    CocFloating
     hi! link CocHintFloat    CocFloating
 
+    hi clear CocUnderline
     hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
   endif
 
-  hi default link CocErrorHighlight   CocUnderline
-  hi default link CocWarningHighlight CocUnderline
-  hi default link CocInfoHighlight    CocUnderline
-  hi default link CocHintHighlight    CocUnderline
+  hi! default link CocErrorHighlight   CocUnderline
+  hi! default link CocWarningHighlight CocUnderline
+  hi! default link CocInfoHighlight    CocUnderline
+  hi! default link CocHintHighlight    CocUnderline
 endfunction
 
 function ToggleColorsTo(colors_variant)
