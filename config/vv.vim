@@ -5,14 +5,14 @@ if exists('g:vv')
   VVset fontsize=13
   VVset lineheight=1.25
   VVset letterspacing=-1
-  " VVset windowheight=100% 
-  " VVset windowwidth=60%
-  " VVset windowleft=0
-  " VVset windowtop=0
-  VVset reloadchanged
-  " VVset fullscreen
+  VVset windowheight=100% 
+  VVset windowwidth=60%
+  VVset windowleft=0
+  VVset windowtop=0
+  VVset nofullscreen
+  VVset openInProject=1
+  " VVset noreloadchanged
   " VVset nosimplefullscreen
   " VVset quitoncloselastwindow
   " VVset autoupdateinterval=1
-  VVset openInProject=1
 endif

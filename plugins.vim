@@ -209,5 +209,8 @@ map <silent> <Leader>jt :A test<CR>
 map <silent> <Leader>jn :A snapshot<CR>
 
 " ===================================================================
+" Reload All on W12
+Plug 'igorgladkoborodov/load-all.vim'
+
 
 call plug#end()
