@@ -2,6 +2,7 @@
 " Status Line
 " ==========================================
 function! CocStatus()
+  return ""
   let info = get(b:, 'coc_diagnostic_info', {})
   let status = substitute(get(g:, 'coc_status', ''), 'Prettier', '', '')
   if get(info, 'error', 0) || get(info, 'warning', 0)

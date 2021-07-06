@@ -29,6 +29,20 @@ function ToggleColors()
   hi! default link CocWarningHighlight CocUnderline
   hi! default link CocInfoHighlight    CocUnderline
   hi! default link CocHintHighlight    CocUnderline
+
+  hi link LspDiagnosticsVirtualTextError Comment
+  hi link LspDiagnosticsVirtualTextWarning Comment
+  hi link LspDiagnosticsVirtualTextInformation Comment
+  hi link LspDiagnosticsVirtualTextHint Comment
+
+  hi clear LspDiagnosticsUnderlineError
+  hi link LspDiagnosticsUnderlineError CocUnderline
+  hi clear LspDiagnosticsUnderlineWarning
+  hi link LspDiagnosticsUnderlineWarning CocUnderline
+  hi clear LspDiagnosticsUnderlineInformation
+  hi link LspDiagnosticsUnderlineInformation CocUnderline
+  hi clear LspDiagnosticsUnderlineHint
+  hi link LspDiagnosticsUnderlineHint CocUnderline
 endfunction
 
 function ToggleColorsTo(colors_variant)

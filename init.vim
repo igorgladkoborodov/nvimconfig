@@ -50,7 +50,7 @@ set nofoldenable                " Enable folding
 set foldmethod=indent           " ...by indent
 set foldlevel=99999             " Always expand everything by default
 
-set switchbuf=uselast           " Jump to last buffer when select file from quickfix
+" set switchbuf=uselast           " Jump to last buffer when select file from quickfix
 
 let g:ruby_host_prog = '~/.rbenv/versions/2.6.6/bin/neovim-ruby-host'
 let g:node_host_prog = '~/.nvm/versions/node/v10.15.3/bin/neovim-node-host'
