@@ -1,18 +1,19 @@
 {
+  "suggest.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "hover.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+
   "tsserver.enableJavascript": true,
   "tsserver.disableAutomaticTypeAcquisition": true,
   //"tsserver.trace.server": "verbose",
+  "typescript.updateImportsOnFileMove.enable": false,
 
   "javascript.validate.enable": false,
-
-  "eslint.filetypes": [
-    "javascript",
-    "typescript",
-    "javascript.jsx",
-    "typescript.tsx",
-    "javascriptreact",
-    "typescriptreact"
-  ],
 
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
@@ -27,9 +28,7 @@
   "diagnostic.enableSign": false,
 
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  "notification.disabledProgressSources": ["*"],
 
-  "diagnostic.messageTarget": "echo",
-  "diagnostic.refreshAfterSave": true,
-
-  //"coc.preferences.enableFloatHighlight": false,
+  "diagnostic.messageTarget": "echo"
 }

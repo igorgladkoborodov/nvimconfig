@@ -25,6 +25,8 @@ function ToggleColors()
     hi CocUnderline gui=undercurl term=undercurl guisp=#FF0000
   endif
 
+  hi! link typescriptParens CocFloating
+
   hi! default link CocErrorHighlight   CocUnderline
   hi! default link CocWarningHighlight CocUnderline
   hi! default link CocInfoHighlight    CocUnderline
