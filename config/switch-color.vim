@@ -26,6 +26,8 @@ function ToggleColors()
   endif
 
   hi! link typescriptParens CocFloating
+  hi! link typescriptBraces CocFloating
+  hi! link typescriptCall CocFloating
 
   hi! default link CocErrorHighlight   CocUnderline
   hi! default link CocWarningHighlight CocUnderline

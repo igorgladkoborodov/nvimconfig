@@ -7,6 +7,15 @@
     "border": true,
     "rounded": true
   },
+  "diagnostic.floatConfig": {
+    "border": true,
+    "rounded": true
+  },
+  "signature.floatConfig": {
+    "border": true,
+    "rounded": true,
+    "close" : true
+  },
 
   "tsserver.enableJavascript": true,
   "tsserver.disableAutomaticTypeAcquisition": true,
@@ -30,5 +39,6 @@
   "coc.preferences.currentFunctionSymbolAutoUpdate": true,
   "notification.disabledProgressSources": ["*"],
 
-  "diagnostic.messageTarget": "echo"
+  "diagnostic.virtualText": true,
+  "diagnostic.messageDelay": 1000000000
 }

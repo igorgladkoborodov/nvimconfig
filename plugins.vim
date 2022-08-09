@@ -166,7 +166,7 @@ nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
+      \ coc#pum#visible() ? coc#pum#confirm():
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
