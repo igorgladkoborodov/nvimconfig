@@ -5,6 +5,9 @@
     "coc-json": ">=1.6.0",
     "coc-prettier": ">=9.3.1",
     "coc-solargraph": ">=1.2.4",
-    "coc-tsserver": ">=1.11.1"
-  }
+    "coc-tsserver": ">=1.11.2",
+    "@yaegassy/coc-tailwindcss3": ">=0.4.7"
+  },
+  "disabled": [],
+  "locked": []
 }

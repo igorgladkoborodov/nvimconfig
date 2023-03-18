@@ -163,16 +163,18 @@ nmap <silent> gr :call CocActionAsync('jumpReferences')<CR>
 " Use K to show documentation in preview window
 nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
 inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#confirm():
-      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-inoremap <silent><expr> <c-space> coc#refresh()
 
-function! s:check_back_space() abort
+function! CheckBackspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -213,5 +215,8 @@ map <silent> <Leader>jn :A snapshot<CR>
 " Reload All on W12
 Plug 'igorgladkoborodov/load-all.vim'
 
+" ===================================================================
+" Quickjump in the visible area
+Plug 'ggandor/leap.nvim'
 
 call plug#end()

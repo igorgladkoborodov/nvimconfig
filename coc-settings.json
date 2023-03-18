@@ -1,8 +1,9 @@
 {
   "suggest.floatConfig": {
     "border": true,
-    "rounded": true
+    "rounded": true,
   },
+  "suggest.noselect": true,
   "hover.floatConfig": {
     "border": true,
     "rounded": true
@@ -21,8 +22,10 @@
   "tsserver.disableAutomaticTypeAcquisition": true,
   //"tsserver.trace.server": "verbose",
   "typescript.updateImportsOnFileMove.enable": false,
+  "typescript.autoClosingTags":false,
 
   "javascript.validate.enable": false,
+  "javascript.autoClosingTags": false,
 
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
