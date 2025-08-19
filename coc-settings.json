@@ -1,7 +1,11 @@
 {
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.packageManager": "pnpm",
+  "eslint.workingDirectories": [{ "pattern": "apps/*" }, { "pattern": "packages/*" }],
+  "coc.source.buffer.enable": false,
   "suggest.floatConfig": {
     "border": true,
-    "rounded": true,
+    "rounded": true
   },
   "suggest.noselect": true,
   "hover.floatConfig": {
@@ -15,24 +19,46 @@
   "signature.floatConfig": {
     "border": true,
     "rounded": true,
-    "close" : true
+    "close": true
+  },
+
+  "languageserver": {
+    "rubocop": {
+      "command": "bundle",
+      "args": ["exec", "rubocop", "--lsp"],
+      "filetypes": ["ruby"],
+      "rootPatterns": ["Gemfile"],
+      "requireRootPattern": true
+    }
   },
 
   "tsserver.enableJavascript": true,
   "tsserver.disableAutomaticTypeAcquisition": true,
+  "tsserver.useLocalTsdk": true,
+  // "tsserver.tsdk": "${workspaceFolder}/node_modules/typescript/lib",
+  // "workspace.workspaceFolderCheckCwd": false,
+  "workspace.rootPatterns": ["package.json", "tsconfig.json", "eslint.config.mjs"],
+  "workspace.workspaceFolderCheckCwd": false,
   //"tsserver.trace.server": "verbose",
   "typescript.updateImportsOnFileMove.enable": false,
-  "typescript.autoClosingTags":false,
+  "typescript.autoClosingTags": false,
 
   "javascript.validate.enable": false,
   "javascript.autoClosingTags": false,
 
-  "solargraph.diagnostics": true,
-  "solargraph.formatting": true,
-  //"solargraph.commandPath": "~/.rbenv/versions/2.6.6/bin/solargraph",
-  "solargraph.hover": true,
+  // "solargraph.diagnostics": true,
+  // "solargraph.formatting": true,
+  //"solargraph.commandPath": "~/.rbenv/versions/3.3.4/bin/solargraph",
+  // "solargraph.hover": true,
 
   //"prettier.formatterPriority": 1,
+
+  // "prettier.enableDebugLogs": true,
+  // "prettier.onlyUseLocalVersion": true,
+  // "prettier.prettierPath": "./node_modules/.bin/prettier",
+  // "prettier.configPath": "/Users/igor/corca/corca-app/.prettierrc",
+  // "prettier.requireConfig": true,
+  // "prettier.resolveGlobalModules": false,
 
   "diagnostic.errorSign": "🚫",
   "diagnostic.warningSign": "⚠️",
