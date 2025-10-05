@@ -8,6 +8,7 @@ return {
     system_clipboard = {
       sync_with_ring = false,
       clipboard_register = nil,
+      update_register_on_cycle = false,
     },
     highlight = {
       on_put = false,

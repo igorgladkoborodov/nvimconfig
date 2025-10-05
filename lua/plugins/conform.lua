@@ -22,7 +22,7 @@ return {
     formatters_by_ft = {
       lua = { "stylua" },
       python = { "isort", "black" },
-      ["*"] = { "prettierd" }
+      ["*"] = { "prettierd" },
     },
     default_format_opts = {
       lsp_format = "fallback",
@@ -32,7 +32,7 @@ return {
       -- rubocop = {
       --   args = { "--only-recognized-file-types", "--force-exclusion", "-A", "-f", "quiet", "--stderr", "--stdin", "$FILENAME" }
       --
-      --   -- append_args = 
+      --   -- append_args =
       --   --   { "--server", "--auto-correct-all", "--stderr", "--force-exclusion", "--stdin", "$FILENAME" }
       --   --   { "--only-recognized-file-types", "--force-exclusion", "-A" },
       -- },
@@ -40,11 +40,11 @@ return {
         append_args = { "--fix", "--flag", "unstable_config_lookup_from_file" },
       },
       prettier = {
-        append_args = { "--ignore-unknown" }
+        append_args = { "--ignore-unknown" },
       },
       prettierd = {
-        append_args = { "--ignore-unknown" }
-      }
+        append_args = { "--ignore-unknown" },
+      },
     },
   },
   init = function()

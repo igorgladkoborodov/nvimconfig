@@ -34,6 +34,25 @@ return {
           },
         },
         default_component_configs = {
+          container = {
+            enable_character_fade = false,
+            -- right_padding = 1,
+          },
+          git_status = {
+            symbols = {
+              -- Change type
+              added = "", -- or "✚"
+              modified = "", -- or ""
+              deleted = "", -- this can only be used in the git_status source
+              renamed = "", -- this can only be used in the git_status source
+              -- Status type
+              untracked = "",
+              ignored = "",
+              unstaged = "",
+              staged = "",
+              conflict = "",
+            },
+          },
           icon = {
             -- keep icons subtle; you can remove devicons dep if you want *no* icons
             folder_closed = "▶︎",

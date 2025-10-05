@@ -15,7 +15,7 @@ return {
   {
     "mileszs/ack.vim",
     init = function()
-      if vim.fn.executable("rg") == 1 then
+      if vim.fn.executable "rg" == 1 then
         vim.g.ackprg = "rg --vimgrep --no-heading --smart-case"
       end
       -- Map to open Ack with a trailing space to start typing the query
@@ -26,15 +26,15 @@ return {
   },
 
   -- ======================================================
-  -- LustyJuggler
-  -- ======================================================
-  {
-    "sjbach/lusty",
-    init = function()
-      vim.keymap.set("n", "<Leader>s", ":LustyJuggler<CR>", { silent = true })
-      vim.keymap.set("n", "\\s", ":LustyJuggler<CR>", { silent = true })
-    end,
-  },
+  -- -- LustyJuggler
+  -- -- ======================================================
+  -- {
+  --   "sjbach/lusty",
+  --   init = function()
+  --     vim.keymap.set("n", "<Leader>s", ":LustyJuggler<CR>", { silent = true })
+  --     vim.keymap.set("n", "\\s", ":LustyJuggler<CR>", { silent = true })
+  --   end,
+  -- },
 
   -- ====================================================================
   -- Fix copypaste
@@ -102,7 +102,7 @@ return {
       vim.opt.signcolumn = "auto"
 
       -- Keep your original mappings/functions verbatim (they rely on coc#…)
-      vim.cmd([[
+      vim.cmd [[
 " Use K to show documentation in preview window
 nnoremap <silent> K :call CocActionAsync('doHover')<CR>
 
@@ -137,7 +137,7 @@ map <Leader>c <Plug>(coc-diagnostic-info)
 " map <silent> \p :call CocActionAsync('format')<CR>
 
 " autocmd FileType * let b:coc_root_patterns = ['.git']
-      ]])
+      ]]
     end,
   },
 
@@ -147,10 +147,10 @@ map <Leader>c <Plug>(coc-diagnostic-info)
   {
     "igorgladkoborodov/alter-ego.vim",
     init = function()
-      vim.keymap.set("n", "<Leader>jf", ":A<CR>",         { silent = true })
-      vim.keymap.set("n", "<Leader>js", ":A style<CR>",   { silent = true })
-      vim.keymap.set("n", "<Leader>jt", ":A test<CR>",    { silent = true })
-      vim.keymap.set("n", "<Leader>jn", ":A snapshot<CR>",{ silent = true })
+      vim.keymap.set("n", "<Leader>jf", ":A<CR>", { silent = true })
+      vim.keymap.set("n", "<Leader>js", ":A style<CR>", { silent = true })
+      vim.keymap.set("n", "<Leader>jt", ":A test<CR>", { silent = true })
+      vim.keymap.set("n", "<Leader>jn", ":A snapshot<CR>", { silent = true })
     end,
   },
 
