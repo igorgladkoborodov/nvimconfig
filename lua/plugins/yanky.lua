@@ -4,7 +4,7 @@ return {
     { "kkharji/sqlite.lua", "folke/snacks.nvim" },
   },
   opts = {
-    ring = { storage = "sqlite" },
+    ring = { storage = "sqlite", cancel_event = nil },
     system_clipboard = {
       sync_with_ring = false,
       clipboard_register = nil,
@@ -18,9 +18,24 @@ return {
   },
   keys = {
     {
-      "<leader>p",
+      "`p",
+      '"0p',
+      mode = { "n", "x" },
+      desc = "Paste from yank register (preserve)",
+    },
+    {
+      "<D-P>",
       function()
-        Snacks.picker.yanky { layout = { preset = "vertical" } }
+        Snacks.picker.yanky {
+          layout = {
+            preset = "vertical",
+            preview = "popup",
+            layout = {
+              width = 0.6, -- 60% of screen width
+              height = 0.8, -- 80% of screen height
+            },
+          },
+        }
       end,
       mode = { "n", "x" },
       desc = "Open Yank History",

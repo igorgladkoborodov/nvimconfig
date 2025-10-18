@@ -25,17 +25,6 @@ return {
     end,
   },
 
-  -- ======================================================
-  -- -- LustyJuggler
-  -- -- ======================================================
-  -- {
-  --   "sjbach/lusty",
-  --   init = function()
-  --     vim.keymap.set("n", "<Leader>s", ":LustyJuggler<CR>", { silent = true })
-  --     vim.keymap.set("n", "\\s", ":LustyJuggler<CR>", { silent = true })
-  --   end,
-  -- },
-
   -- ====================================================================
   -- Fix copypaste
   -- ====================================================================
@@ -144,15 +133,15 @@ map <Leader>c <Plug>(coc-diagnostic-info)
   -- ===================================================================
   -- Jump between alternate files
   -- ===================================================================
-  {
-    "igorgladkoborodov/alter-ego.vim",
-    init = function()
-      vim.keymap.set("n", "<Leader>jf", ":A<CR>", { silent = true })
-      vim.keymap.set("n", "<Leader>js", ":A style<CR>", { silent = true })
-      vim.keymap.set("n", "<Leader>jt", ":A test<CR>", { silent = true })
-      vim.keymap.set("n", "<Leader>jn", ":A snapshot<CR>", { silent = true })
-    end,
-  },
+  -- {
+  --   "igorgladkoborodov/alter-ego.vim",
+  --   init = function()
+  --     vim.keymap.set("n", "<Leader>jf", ":A<CR>", { silent = true })
+  --     vim.keymap.set("n", "<Leader>js", ":A style<CR>", { silent = true })
+  --     vim.keymap.set("n", "<Leader>jt", ":A test<CR>", { silent = true })
+  --     vim.keymap.set("n", "<Leader>jn", ":A snapshot<CR>", { silent = true })
+  --   end,
+  -- },
 
   -- ===================================================================
   -- Reload All on W12
