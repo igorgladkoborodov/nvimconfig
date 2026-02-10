@@ -65,6 +65,11 @@ return {
             hidden = true,
             -- ignored = false,
             follow = false,
+            formatters = {
+              file = {
+                truncate = 100,
+              },
+            },
           }
 
           -- Immediately toggle preview off before first render completes
